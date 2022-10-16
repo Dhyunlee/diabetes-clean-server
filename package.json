@@ -1,4 +1,12 @@
 {
+  "type": "module",
+  "name": "api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "api": "nodemon index.js --exec babel-node",
+    "start": "node index.js --exec babel-node"
+  },
   "dependencies": {
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
