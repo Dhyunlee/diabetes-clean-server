@@ -1,12 +1,12 @@
-const mongoURI = process.env.MONGO_URI;
-const port = process.env.PORT;
+const MONGO_URI = process.env.MONGO_URI;
+const PORT = process.env.PORT;
 const JWT_SECRET = process.env.JWT_SECRET
 const COOKIE_SECRET = process.env.COOKIE_SECRET
 
 
 export default {
-  mongoURI,
-  port,
+  MONGO_URI,
+  PORT,
   JWT_SECRET,
   COOKIE_SECRET
 };

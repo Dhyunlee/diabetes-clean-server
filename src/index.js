@@ -1,16 +1,21 @@
 import express from "express";
-import path from "path";
-import cors from "cors";
-import cookieParser from "cookie-parser";
+import cookieParser from 'cookie-parser';
+
 import config from "#config/key";
 import usersRouter from "#routes/users";
+import dbconnect from "#dbconfig";
 
 const app = express();
-const { mongoURI, port } = config;
+const { PORT, COOKIE_SECRET } = config;
+
+dbconnect()
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser(COOKIE_SECRET));
 
 app.use("/api/v1/users", usersRouter);
 app.use("/", (req, res) => res.json({ isSucess: true }));
 
-app.listen(port, () =>
-  console.log(`Server Listening on http://localhost:${port}`)
+app.listen(PORT, () =>
+  console.log(`Server Listening on http://localhost:${PORT}`)
 );
