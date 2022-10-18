@@ -1,9 +1,9 @@
 import express from "express";
 import cookieParser from 'cookie-parser';
 
-import config from "#config/key";
-import usersRouter from "#routes/users";
-import dbconnect from "#dbconfig";
+import config from "./config/key.js";
+import usersRouter from "./routes/users.js";
+import dbconnect from "./dbconfig.js";
 
 const app = express();
 const { PORT, COOKIE_SECRET } = config;

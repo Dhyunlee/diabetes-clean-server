@@ -1,11 +1,12 @@
 import express from "express";
-import auth from "#middleware/auth";
-import User from "#models/user";
+import bcrypt from "bcrypt";
+import auth from "../middleware/auth.js";
+import User from "../models/user.js";
 
 const router = express.Router();
 
-// @routes     GET api/user
-// @desc       Get user
+// @routes     GET api/users
+// @desc       Get 유저 인증 상태
 router.get("/", auth, async (req, res) => {
   try {
     const data = req.user;
@@ -16,7 +17,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// @routes     POST api/user
+// @routes     POST api/users
 // @desc       POST 유저 회원가입
 router.post("/", async (req, res) => {
   const { email, nickname, password } = req.body;
@@ -29,17 +30,15 @@ router.post("/", async (req, res) => {
       password: hashedPassword,
     });
 
-    const user = await newUser.save();
-
     // 토큰 생성
-    const token = user.generateToken();
-    res
-      .cookie("createdToken", token, {
-        maxAge: 1000 * 60 * 60 * 24 * 7, // 7일, (1000 * 60 * 60 * 24) = 1일
-        httpOnly: true,
-      })
-      .status(200)
-      .json({ msg: "가입 완료" });
+    // const token = user.generateToken();
+    // res
+      // .cookie("createdToken", token, {
+      //   maxAge: 1000 * 60 * 60 * 24 * 7, // 7일, (1000 * 60 * 60 * 24) = 1일
+      //   httpOnly: true,
+      // })
+      // .status(200)
+      // .json({ msg: "가입 완료" });
   } catch (err) {
     res.status(500).json(err);
   }
