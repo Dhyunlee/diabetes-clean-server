@@ -3,7 +3,7 @@ import User from "../models/user.js";
 
 let auth = async (req, res, next) => {
   console.log("auth 미들웨어 실행");
-  let token = req.cookies.createdToken;
+  let token = req.cookies.access_token;
   if (!token) return next(); // 토큰 없음
 
   // 토큰 검증
@@ -15,7 +15,7 @@ let auth = async (req, res, next) => {
       const user = await User.findById(decoded._id);
       console.log({ user_: user });
       const token = user.generateToken();
-      res.cookie("createdToken", token, {
+      res.cookie("access_token", token, {
         maxAge: 1000 * 60 * 60 * 24 * 7,
         httpOnly: true,
       });
