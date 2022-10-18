@@ -33,7 +33,7 @@ const userSchema = Schema(
 );
 
 // 비번 검사
-userSchema.methods.checkPassword = (originPw, cb) => {
+userSchema.methods.checkPassword = function (originPw, cb) {
   bcrypt.compare(originPw, this.password, (err, isMatch) => {
     if (err) return cb(err);
     cb(null, isMatch);
@@ -41,7 +41,7 @@ userSchema.methods.checkPassword = (originPw, cb) => {
 };
 
 // 토큰 발급
-userSchema.methods.generateToken = () => {
+userSchema.methods.generateToken = function () {
   const token = jwt.sign(
     {
       _id: this.id,
@@ -54,7 +54,7 @@ userSchema.methods.generateToken = () => {
 };
 
 // 토큰 검증
-userSchema.statics.verifyToken = (token, cb) => {
+userSchema.statics.verifyToken = function (token, cb) {
   jwt.verify(token, JWT_SECRET, (err, decoded) => {
     if (err) return cb(err);
     cb(null, decoded);
