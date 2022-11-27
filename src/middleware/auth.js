@@ -9,18 +9,18 @@ let auth = async (req, res, next) => {
   // 토큰 검증
   User.verifyToken(token, async (err, decoded) => {
     if (err) throw err;
+    const user = await User.findById(decoded._id);
     const now = Math.floor(day().valueOf() / 1000);
     if (decoded.exp - now < 60 * 60 * 24 * 3.5) {
-      console.log("실행");
-      const user = await User.findById(decoded._id);
-      console.log({ user_: user });
+      console.log("토큰 발급");
       const token = user.generateToken();
       res.cookie("access_token", token, {
         maxAge: 1000 * 60 * 60 * 24 * 7,
         httpOnly: true,
       });
     }
-    req.user = decoded;
+    const {password, ...userData} = user._doc;
+    req.user = userData;
     next();
     /* 
        다음 미들웨어 데이터를 전달할 때 

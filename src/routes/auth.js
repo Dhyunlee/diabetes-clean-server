@@ -30,7 +30,7 @@ router.post("/login", async (req, res) => {
             httpOnly: true,
           })
           .status(200)
-          .json({ userData, msg: "로그인 완료" });
+          .json("로그인 완료");
       }
     });
   } catch (err) {
@@ -54,7 +54,7 @@ router.post('/checkemail', async (req, res) => {
 // @routes     GET api/v1/auth/logout
 // @desc       유저 로그아웃
 router.get('/logout', async (req, res) => {
-  res.clearCookie('createdToken').json({ msg: '로그아웃 성공' });
+  res.clearCookie('access_token').json({ msg: '로그아웃 성공' });
 });
 
 export default router;
