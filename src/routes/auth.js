@@ -19,8 +19,6 @@ router.post("/login", async (req, res) => {
       if (!isMatch) {
         res.status(401).json("비밀번호가 일치하지 않습니다.");
       } else {
-        const { password, ...userData } = user?._doc;
-
         // 토큰 생성하기
         const token = user.generateToken();
 
