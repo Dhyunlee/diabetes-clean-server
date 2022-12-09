@@ -9,9 +9,7 @@ const router = express.Router();
 // @desc       유저 인증 상태
 router.get("/", auth, async (req, res) => {
   try {
-    const data = req.user;
-    if (!data) return res.status(401).json('인증 필요');
-    res.status(200).json(data);
+    res.status(200).json(req.user || false);
   } catch (err) {
     res.status(500).json(err);
   }

@@ -2,7 +2,6 @@ import day from "dayjs";
 import User from "../models/user.js";
 
 let auth = async (req, res, next) => {
-  console.log("auth 미들웨어 실행");
   let token = req.cookies.access_token;
   if (!token) return next(); // 토큰 없음
 
