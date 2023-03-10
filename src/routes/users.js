@@ -5,7 +5,7 @@ import User from "../models/user.js";
 
 const router = express.Router();
 
-// @routes     GET api/users
+// @routes     GET api/v1/users
 // @desc       유저 인증 상태
 router.get("/", auth, async (req, res) => {
   try {
@@ -15,7 +15,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// @routes     POST api/users
+// @routes     POST api/v1/users
 // @desc       유저 회원가입
 router.post("/", async (req, res) => {
   const { email, nickname, password } = req.body;
