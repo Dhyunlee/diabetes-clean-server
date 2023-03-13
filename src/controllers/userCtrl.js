@@ -1,0 +1,38 @@
+export const userCtrl = {
+  getUserState: async (req, res) => {
+    try {
+      res.status(200).json(req.user || false);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+  postUser: async (req, res) => {
+    const { email, nickname, password } = req.body;
+    try {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      const newUser = new User({
+        email,
+        nickname,
+        password: hashedPassword,
+      });
+  
+      const user = await newUser.save();
+  
+      // 토큰 생성
+      const token = user.generateToken();
+  
+      res
+        .cookie("access_token", token, {
+          maxAge: 1000 * 60 * 60 * 24 * 7, // 7일, (1000 * 60 * 60 * 24) = 1일
+          httpOnly: true,
+        })
+        .status(200)
+        .json({ msg: "가입 완료" });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+//   deleteUser,
+//   updateUser
+}
