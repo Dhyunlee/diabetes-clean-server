@@ -2,7 +2,7 @@ import day from "dayjs";
 import User from "../models/user.js";
 
 let auth = async (req, res, next) => {
-  let token = req.cookies.access_token;
+  let token = req.cookies.token;
   if (!token) return next(); // 토큰 없음
 
   // 토큰 검증

@@ -1,4 +1,4 @@
-import User from "../models/user";
+import User from "../models/user.js";
 
 export const authCtrl = {
   login: async (req, res) => {
@@ -17,14 +17,10 @@ export const authCtrl = {
         } else {
           // 토큰 생성하기
           const token = user.generateToken();
-
           res
-            .cookie("access_token", token, {
-              maxAge: 1000 * 60 * 60 * 24 * 7, // 7일, (1000 * 60 * 60 * 24) = 1일
-              httpOnly: true,
-            })
+            .setHeader("Authorization", `Bearer ${token}`)
             .status(200)
-            .json("로그인 완료");
+            .json({ token, ok: true });
         }
       });
     } catch (err) {
@@ -42,6 +38,6 @@ export const authCtrl = {
     }
   },
   logout: async (req, res) => {
-    res.clearCookie("access_token").json({ msg: "로그아웃 성공" });
+    res.clearCookie("token").json({ msg: "로그아웃 성공" });
   },
 };
