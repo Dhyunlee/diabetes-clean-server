@@ -14,14 +14,14 @@ const diabetesSchema = Schema(
       type: String,
       require: true,
     },
-    createdTime: {
+    createdAt: {
       type: String,
-      default: Date.now,
+      default: new Date(),
       require: true,
     },
   },
   {
-    timestamps: true,
+    timestamps: false,
   }
 );
 
