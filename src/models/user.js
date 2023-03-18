@@ -26,6 +26,18 @@ const userSchema = Schema(
       type: String,
       default: "",
     },
+    followers: { //나를 팔로우한 목록
+      type: Array,
+      default: [],
+    },
+    followings: { //내가 팔로우한 목록 
+      type: Array,
+      default: [],
+    },
+    aboutMe: { //유저 소개
+      type: String,
+      max: 80,
+    },
   },
   {
     timestamps: true,
