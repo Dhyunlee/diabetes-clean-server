@@ -2,7 +2,7 @@ import User from "../models/user.js";
 import bcrypt from "bcrypt";
 
 export const userCtrl = {
-  getUserState: async (req, res) => {
+  getUserInfo: async (req, res) => {
     try {
       res.status(200).json({ isOk: true, userInfo: req.user || false });
     } catch (err) {
