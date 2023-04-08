@@ -1,18 +1,17 @@
 import { Schema, model } from "mongoose";
 
-const contentsSchema = Schema(
+const commentSchema = Schema(
   {
     writer: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    ContentsId: {
+      type: Schema.Types.ObjectId,
+      ref: "Contents",
+    },
     content: {
       type: String,
-    },
-    images: {
-      type: Array,
-      ref: "Image",
-      default: [],
     },
   },
   {
@@ -20,5 +19,5 @@ const contentsSchema = Schema(
   }
 );
 
-const Contents = model("Contents", contentsSchema);
-export default Contents;
+const Comment = model("Comment", commentSchema);
+export default Comment;

@@ -28,7 +28,6 @@ export const diabetesCtrl = {
   },
   updateDiabetes: async (req, res) => {},
   getAllDiabetes: async (req, res) => {
-    console.log(req.params);
     const writer = req.params.userId;
     try {
       const diabetes = await Diabetes.find({ writer })

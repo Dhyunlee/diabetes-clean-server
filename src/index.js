@@ -1,7 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-
+import morgan from 'morgan';
 import config from "./config/key.js";
 import dbconnect from "./dbconfig.js";
 import usersRouter from "./routes/users.js";
@@ -12,6 +12,7 @@ const app = express();
 const { PORT, COOKIE_SECRET } = config;
 
 dbconnect();
+app.use(morgan('dev'));
 app.use(
   cors({
     origin: "http://localhost:3000",
