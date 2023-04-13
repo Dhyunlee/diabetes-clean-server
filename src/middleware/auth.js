@@ -13,7 +13,7 @@ let auth = async (req, res, next) => {
     const isVerifyToken = await JWT_AUTH.verifyToken(accessToken);
     if (isVerifyToken.isDecode) {
       const user = await User.findOne({ email: isVerifyToken.decoded.email });
-      const { password, ...userData } = user._doc;
+      const { password, token, ...userData } = user._doc;
       req.user = userData;
       next();
     } else {
