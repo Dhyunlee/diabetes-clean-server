@@ -6,13 +6,17 @@ const diabetesSchema = Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    GI: {
+    sugar_level: {
       type: Number,
       require: true,
     },
     slot: {
       type: String,
       require: true,
+    },
+    note: {
+      type: String,
+      default: "",
     },
     createdAt: {
       type: String,
