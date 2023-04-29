@@ -6,12 +6,20 @@ const commentSchema = Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    ContentsId: {
+    contentsId: {
       type: Schema.Types.ObjectId,
       ref: "Contents",
     },
+    parentCommentId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Comments'
+    },
     content: {
       type: String,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false, /* true이면 삭제된 상태 */
     },
   },
   {
