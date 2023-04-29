@@ -9,11 +9,14 @@ const contentsSchema = Schema(
     content: {
       type: String,
     },
-    images: {
-      type: Array,
-      ref: "Image",
-      default: [],
+    imageName: {
+      type: String,
+      default: ''
     },
+    imageUrl: {
+      type: String,
+      default: ''
+    }
   },
   {
     timestamps: true,
