@@ -1,4 +1,5 @@
 import Diabetes from "../models/diabetes.js";
+import User from "../models/user.js";
 
 export const diabetesCtrl = {
   postDiabetes: async (req, res) => {
@@ -12,51 +13,34 @@ export const diabetesCtrl = {
   },
   deleteDiabetes: async (req, res) => {
     try {
-      const diabetes = await Diabetes.findById(req.params.id).populate(
-        "writer",
-        "nickname"
-      );
-      const writedUserId = diabetes.writer._id;
-      const currentUserId = req.user._id;
-
-      if (writedUserId.equals(currentUserId)) {
-        await Diabetes.deleteOne({ _id: req.params.id });
-        return res
-          .status(200)
-          .json({ isOk: true, msg: "성공적으로 삭제되었습니다." });
-      } else {
+      const diabetes = await Diabetes.findById(req.params.id);
+      if(!diabetes) {
         return res
           .status(403)
-          .json({ isOk: false, msg: "작성자만 삭제할 수 있습니다." });
+          .json({ isOk: false, msg: "해당 당수치 데이터가 존재하지 않습니다." });
       }
+      await diabetes.deleteOne();
+      return res
+      .status(200)
+      .json({ isOk: true, msg: "해당 당수치 데이터가 삭제되었습니다." });
     } catch (err) {
       return res.status(500).json(err);
     }
   },
   updateDiabetes: async (req, res) => {
     try {
-      const diabetes = await Diabetes.findById(req.params.id).populate(
-        "writer",
-        "nickname"
-      );
-      const writedUserId = diabetes.writer._id;
-      const currentUserId = req.user._id;
-      console.log({writedUserId, currentUserId, equals: writedUserId.equals(currentUserId)})
-      if (writedUserId.equals(currentUserId)) {
-        await Diabetes.updateOne(
-          { _id: req.params.id },
-          {
-            $set: req.body,
-          }
-        );
-        return res
-          .status(200)
-          .json({ isOk: true, msg: "성공적으로 수정되었습니다." });
-      } else {
+      const diabetes = await Diabetes.findById(req.params.id);
+      if(!diabetes) {
         return res
           .status(403)
-          .json({ isOk: false, msg: "작성자만 수정할 수 있습니다." });
+          .json({ isOk: false, msg: "해당 당수치 데이터가 존재하지 않습니다." });
       }
+      await diabetes.updateOne({
+        $set: req.body,
+      });
+      return res
+      .status(200)
+      .json({ isOk: true, msg: "해당 당수치 데이터가 수정되었습니다." });
     } catch (err) {
       return res.status(500).json(err);
     }
@@ -65,7 +49,7 @@ export const diabetesCtrl = {
     const writer = req.params.userId;
     try {
       const diabetes = await Diabetes.find({ writer })
-        .sort({ _id: -1 }) // 내림차순 정렬
+        .sort({ createdAt: -1 }) // 내림차순 정렬
         .populate("writer", "nickname");
       res.status(200).json({ isOk: true, diabetesInfo: diabetes });
     } catch (err) {
@@ -76,10 +60,8 @@ export const diabetesCtrl = {
     const diabetesId = req.params.id;
     try {
       const diabetes = await Diabetes.findById(diabetesId).populate(
-        "writer",
-        "nickname"
-      );
-      console.log(diabetes);
+        "writer", "nickname" 
+        );
       res.status(200).json({ isOk: true, diabetesInfo: diabetes ?? {} });
     } catch (err) {
       console.log(err);
