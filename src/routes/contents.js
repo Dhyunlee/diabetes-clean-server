@@ -22,7 +22,7 @@ router.get("/", contentsCtrl.getAllContents);
 
 // @routes     GET api/v1/contents/users/:id
 // @desc       유저의 Contents 모든 데이터 조회
-router.get("/users/:id", contentsCtrl.getAllUserContents);
+router.get("/users/:id", auth, contentsCtrl.getAllUserContents);
 
 // @routes     GET api/v1/contents/:id
 // @desc       Contents 상세 조회

@@ -10,52 +10,38 @@ export const contentsCtrl = {
       return res.status(500).json(err);
     }
   },
-  updateContents: async (req, res) => {
+  deleteContents: async (req, res) => {
     try {
-      const contents = await Contents.indById(req.params.id).populate(
-        "writer",
-        "nickname"
-      );
-      const writedUserId = contents.writer._id;
-      const currentUserId = req.user._id;
-      if (writedUserId.equals(currentUserId)) {
-        await Contents.updateOne(
-          { _id: writedUserId },
-          {
-            $set: req.body,
-          }
-        );
-        return res
-          .status(200)
-          .json({ isOk: true, msg: "성공적으로 수정되었습니다." });
-      } else {
+      const contents = await Contents.findById(req.params.id);
+      if (!contents) {
         return res
           .status(403)
-          .json({ isOk: false, msg: "작성자만 수정할 수 있습니다." });
+          .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
       }
+      await contents.updateOne({
+        $set: req.body,
+      });
+      return res
+        .status(200)
+        .json({ isOk: true, msg: "해당 게시물이 삭제되었습니다." });
     } catch (err) {
       return res.status(500).json(err);
     }
   },
-  deleteContents: async (req, res) => {
+  updateContents: async (req, res) => {
     try {
-      const contents = await Contents.findById(req.params.id).populate(
-        "writer",
-        "nickname"
-      );
-      const writedUserId = contents.writer._id;
-      const currentUserId = req.user._id;
-
-      if (writedUserId.equals(currentUserId)) {
-        await Contents.deleteOne({ _id: writedUserId });
-        return res
-          .status(200)
-          .json({ isOk: true, msg: "성공적으로 삭제되었습니다." });
-      } else {
+      const contents = await Contents.findById(req.params.id);
+      if (!contents) {
         return res
           .status(403)
-          .json({ isOk: false, msg: "작성자만 삭제할 수 있습니다." });
+          .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
       }
+      await contents.updateOne({
+        $set: req.body,
+      });
+      return res
+        .status(200)
+        .json({ isOk: true, msg: "해당 게시물이 수정되었습니다." });
     } catch (err) {
       return res.status(500).json(err);
     }
@@ -64,8 +50,13 @@ export const contentsCtrl = {
     try {
       const contents = await Contents.find().populate(
         "writer",
-        "nickname"
+        "nickname imageSrc"
       );
+      if (!contents) {
+        return res
+          .status(403)
+          .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
+      }
       res.status(200).json({ isOk: true, contents });
     } catch (err) {
       return res.status(500).json(err);
@@ -73,24 +64,33 @@ export const contentsCtrl = {
   },
   getAllUserContents: async (req, res) => {
     try {
-      const contents = await Contents.find({writer: req.params.id}).populate(
-        "writer",
-        "nickname"
-      );
+      const contents = await Contents.find()
+        .where("writer")
+        .equals(req.user._id)
+        .populate("writer", "nickname imageSrc");
+
+      if (!contents) {
+        return res
+          .status(403)
+          .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
+      }
       res.status(200).json({ isOk: true, contents });
     } catch (err) {
       return res.status(500).json(err);
     }
   },
   getFindById: async (req, res) => {
-    const contentsId = req.params.id;
-    console.log({contentsId})
     try {
-      const contents = await Contents.findById(contentsId).populate(
+      const contents = await Contents.findById(req.params.id).populate(
         "writer",
-        "nickname"
+        "nickname imageSrc"
       );
-      console.log(contents)
+      if (!contents) {
+        return res
+          .status(403)
+          .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
+      }
+      console.log({contents})
       res.status(200).json({ isOk: true, contentsInfo: contents });
     } catch (err) {
       return res.status(500).json(err);

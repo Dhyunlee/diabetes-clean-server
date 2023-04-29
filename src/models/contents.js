@@ -16,7 +16,11 @@ const contentsSchema = Schema(
     imageUrl: {
       type: String,
       default: ''
-    }
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false, /* true이면 삭제된 상태 */
+    },
   },
   {
     timestamps: true,
