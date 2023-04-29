@@ -2,7 +2,7 @@ import express from "express";
 import auth from "../middleware/auth.js";
 import { diabetesCtrl } from "../controllers/diabetesCtrl.js";
 
-const router = express.Router("/");
+const router = express.Router();
 
 // @routes     POST api/v1/diabetes
 // @desc       Diabetes 데이터 추가
