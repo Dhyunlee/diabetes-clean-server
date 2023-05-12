@@ -19,7 +19,7 @@ export const contentsCtrl = {
           .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
       }
       await contents.updateOne({
-        $set: req.body,
+        $set: {isDeleted: true},
       });
       return res
         .status(200)
@@ -48,10 +48,9 @@ export const contentsCtrl = {
   },
   getAllContents: async (req, res) => {
     try {
-      const contents = await Contents.find().populate(
-        "writer",
-        "nickname imageSrc"
-      );
+      const contents = await Contents.find()
+        .sort({ createdAt: -1 })
+        .populate("writer", "nickname imageSrc");
       if (!contents) {
         return res
           .status(403)
@@ -67,6 +66,7 @@ export const contentsCtrl = {
       const contents = await Contents.find()
         .where("writer")
         .equals(req.user._id)
+        .sort({ createdAt: -1 })
         .populate("writer", "nickname imageSrc");
 
       if (!contents) {
@@ -90,7 +90,7 @@ export const contentsCtrl = {
           .status(403)
           .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
       }
-      console.log({contents})
+      console.log({ contents });
       res.status(200).json({ isOk: true, contentsInfo: contents });
     } catch (err) {
       return res.status(500).json(err);
