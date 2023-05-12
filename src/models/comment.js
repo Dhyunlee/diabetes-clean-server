@@ -12,7 +12,7 @@ const commentSchema = Schema(
     },
     parentCommentId: {
       type: Schema.Types.ObjectId,
-      ref: 'Comments'
+      ref: 'Comments',
     },
     content: {
       type: String,
