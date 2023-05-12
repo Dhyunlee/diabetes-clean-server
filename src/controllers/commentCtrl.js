@@ -12,7 +12,7 @@ export const commentCtrl = {
   },
   deleteComment: async (req, res) => {
     try {
-      const comment = Comment.findById(req.params.id);
+      const comment = await Comment.findById(req.params.id);
       if (!comment) {
         return res
           .status(403)
@@ -30,9 +30,9 @@ export const commentCtrl = {
   },
   updateComment: async (req, res) => {
     try {
-      const comment = Comment.findById(req.params.id).populate(
+      const comment = await Comment.findById(req.params.id).populate(
         "writer",
-        "ninckname"
+        "nickname"
       );
       if (!comment) {
         return res
@@ -50,7 +50,24 @@ export const commentCtrl = {
   getAllComment: async (req, res) => {
     //해당 게시글에 작성된 모든 댓글
     try {
-      const comment = Comment.find().populate("writer", "ninckname imageSrc");
+      const comment = await Comment.find({
+        contentsId: req.params.contentsId,
+      }).sort({ createdAt: -1 }).populate("writer", "nickname imageSrc");
+      console.log({comment});
+      res.status(200).json({ isOk: true, comment });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+  getUserComment: async (req, res) => {
+    //유저가 작성한 댓글 모음
+    try {
+      const comment = await Comment.find({
+        writer: req.params.userId,
+      })
+        .sort({ createdAt: -1 })
+        .populate("writer", "nickname imageSrc");
+      console.log({ comment });
       res.status(200).json({ isOk: true, comment });
     } catch (err) {
       res.status(500).json(err);
