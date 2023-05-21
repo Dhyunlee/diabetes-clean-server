@@ -3,8 +3,8 @@ import auth from "../middleware/auth.js";
 import { commentCtrl } from "../controllers/commentCtrl.js";
 import {
   FIND_BY_ID,
-  GET_ALL_COMMENT,
-  GET_USER_COMMENT,
+  GET_FIND_BY_CONTENTS_ID,
+  GET_USER_FIND_BY_ID,
   INDEX_PATH,
 } from "../constants/path.js";
 
@@ -24,10 +24,10 @@ router.delete(FIND_BY_ID, auth, commentCtrl.deleteComment);
 
 // @routes     GET api/v1/comment/contents/:contentsId
 // @desc       Comment 모든 데이터 조회
-router.get(GET_ALL_COMMENT, commentCtrl.getAllComment);
+router.get(GET_FIND_BY_CONTENTS_ID, commentCtrl.getAllComment);
 
 // @routes     GET api/v1/comment/user/:userId
 // @desc       Comment 유저가 작성한 데이터 조회
-router.get(GET_USER_COMMENT, commentCtrl.getUserComment);
+router.get(GET_USER_FIND_BY_ID, commentCtrl.getUserComment);
 
 export default router;
