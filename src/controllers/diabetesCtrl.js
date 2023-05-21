@@ -1,45 +1,71 @@
 import Diabetes from "../models/diabetes.js";
+import User from "../models/user.js";
 
 export const diabetesCtrl = {
-   postDiabetes: async (req, res) => {
+  postDiabetes: async (req, res) => {
     const newDiabetes = new Diabetes(req.body);
     try {
-      const savedDiabetes = await newDiabetes.save();
-      res.status(200).json(savedDiabetes);
+      await newDiabetes.save();
+      res.status(200).json({ isOk: true, msg: "성공적으로 저장되었습니다." });
     } catch (err) {
       return res.status(500).json(err);
     }
   },
-   deleteDiabetes: async (req, res) => {
+  deleteDiabetes: async (req, res) => {
     try {
-      await Diabetes.deleteOne({ _id: req.params.id });
-      res.status(200).json("삭제되었습니다.");
+      const diabetes = await Diabetes.findById(req.params.id);
+      if(!diabetes) {
+        return res
+          .status(403)
+          .json({ isOk: false, msg: "해당 당수치 데이터가 존재하지 않습니다." });
+      }
+      await diabetes.deleteOne();
+      return res
+      .status(200)
+      .json({ isOk: true, msg: "해당 당수치 데이터가 삭제되었습니다." });
     } catch (err) {
       return res.status(500).json(err);
     }
   },
-   getAllDiabetes: async (req, res) => {
-    console.log(req.params);
+  updateDiabetes: async (req, res) => {
+    try {
+      const diabetes = await Diabetes.findById(req.params.id);
+      if(!diabetes) {
+        return res
+          .status(403)
+          .json({ isOk: false, msg: "해당 당수치 데이터가 존재하지 않습니다." });
+      }
+      await diabetes.updateOne({
+        $set: req.body,
+      });
+      return res
+      .status(200)
+      .json({ isOk: true, msg: "해당 당수치 데이터가 수정되었습니다." });
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  },
+  getAllDiabetes: async (req, res) => {
     const writer = req.params.userId;
     try {
       const diabetes = await Diabetes.find({ writer })
-        .sort({ _id: -1 }) // 내림차순 정렬
+        .sort({ createdAt: -1 }) // 내림차순 정렬
         .populate("writer", "nickname");
-      res.status(200).json(diabetes);
+      res.status(200).json({ isOk: true, diabetesInfo: diabetes });
     } catch (err) {
       return res.status(500).json(err);
     }
   },
-   getFindById: async (req, res) => {
+  getFindById: async (req, res) => {
     const diabetesId = req.params.id;
     try {
       const diabetes = await Diabetes.findById(diabetesId).populate(
-        "writer",
-        "nickname"
-      );
-      res.status(200).json(diabetes);
+        "writer", "nickname" 
+        );
+      res.status(200).json({ isOk: true, diabetesInfo: diabetes ?? {} });
     } catch (err) {
+      console.log(err);
       return res.status(500).json(err);
     }
-  }
-}
+  },
+};

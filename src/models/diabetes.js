@@ -6,7 +6,7 @@ const diabetesSchema = Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    GI: {
+    sugar_level: {
       type: Number,
       require: true,
     },
@@ -14,14 +14,18 @@ const diabetesSchema = Schema(
       type: String,
       require: true,
     },
-    createdTime: {
+    note: {
       type: String,
-      default: Date.now,
+      default: "",
+    },
+    createdAt: {
+      type: String,
+      default: new Date(),
       require: true,
     },
   },
   {
-    timestamps: true,
+    timestamps: false,
   }
 );
 

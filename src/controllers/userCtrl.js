@@ -1,9 +1,13 @@
+import User from "../models/user.js";
+import bcrypt from "bcrypt";
+
 export const userCtrl = {
-  getUserState: async (req, res) => {
+  getUserInfo: async (req, res) => {
     try {
-      res.status(200).json(req.user || false);
+      res.status(200).json({ isOk: true, userInfo: req.user});
+
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json({err});
     }
   },
   postUser: async (req, res) => {
@@ -16,23 +20,13 @@ export const userCtrl = {
         nickname,
         password: hashedPassword,
       });
-  
-      const user = await newUser.save();
-  
-      // 토큰 생성
-      const token = user.generateToken();
-  
-      res
-        .cookie("access_token", token, {
-          maxAge: 1000 * 60 * 60 * 24 * 7, // 7일, (1000 * 60 * 60 * 24) = 1일
-          httpOnly: true,
-        })
-        .status(200)
-        .json({ msg: "가입 완료" });
+
+      await newUser.save();
+      res.status(200).json({ isOk: true, msg: "가입 완료" });
     } catch (err) {
       res.status(500).json(err);
     }
   },
-//   deleteUser,
-//   updateUser
-}
+  updateUser: async () => {},
+  deleteUser: async () => {},
+};

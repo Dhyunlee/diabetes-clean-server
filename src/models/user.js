@@ -26,40 +26,19 @@ const userSchema = Schema(
       type: String,
       default: "",
     },
+    aboutMe: {
+      //유저 소개
+      type: String,
+      max: 80,
+    },
+    token: {
+      type: String,
+    }
   },
   {
     timestamps: true,
   }
 );
-
-// 비번 검사
-userSchema.methods.checkPassword = function (originPw, cb) {
-  bcrypt.compare(originPw, this.password, (err, isMatch) => {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  });
-};
-
-// 토큰 발급
-userSchema.methods.generateToken = function () {
-  const token = jwt.sign(
-    {
-      _id: this.id,
-      nickname: this.nickname,
-    },
-    JWT_SECRET,
-    { expiresIn: "7d", issuer: "donghu" }
-  );
-  return token;
-};
-
-// 토큰 검증
-userSchema.statics.verifyToken = function (token, cb) {
-  jwt.verify(token, JWT_SECRET, (err, decoded) => {
-    if (err) return cb(err);
-    cb(null, decoded);
-  });
-};
 
 const User = model("User", userSchema);
 export default User;
