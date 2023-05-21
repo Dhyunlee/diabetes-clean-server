@@ -25,7 +25,7 @@ router.delete(FIND_BY_ID, auth, contentsCtrl.deleteContents);
 // @desc       Contents 모든 데이터 조회
 router.get(INDEX_PATH, contentsCtrl.getAllContents);
 
-// @routes     GET api/v1/contents/users/:id
+// @routes     GET api/v1/contents/users/:userId
 // @desc       유저의 Contents 모든 데이터 조회
 router.get(GET_USER_FIND_BY_ID, auth, contentsCtrl.getAllUserContents);
 
