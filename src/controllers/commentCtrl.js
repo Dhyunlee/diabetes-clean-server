@@ -52,8 +52,7 @@ export const commentCtrl = {
     try {
       const comment = await Comment.find({
         contentsId: req.params.contentsId,
-      }).sort({ createdAt: -1 }).populate("writer", "nickname imageSrc");
-      console.log({comment});
+      }).sort({ createdAt: -1 }).populate("writer", "nickname imageSrc").populate("contentsId","_id content writer")
       res.status(200).json({ isOk: true, comment });
     } catch (err) {
       res.status(500).json(err);
