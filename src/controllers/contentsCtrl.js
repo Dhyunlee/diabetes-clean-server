@@ -90,7 +90,6 @@ export const contentsCtrl = {
           .status(403)
           .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
       }
-      console.log({ contents });
       res.status(200).json({ isOk: true, contentsInfo: contents });
     } catch (err) {
       return res.status(500).json(err);

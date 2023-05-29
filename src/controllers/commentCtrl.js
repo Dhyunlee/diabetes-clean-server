@@ -19,7 +19,7 @@ export const commentCtrl = {
           .json({ isOk: false, msg: "해당 댓글이 존재하지 않습니다." });
       }
       await comment.updateOne({
-        $set: req.body,
+        $set: {isDeleted: true},
       });
       return res
         .status(200)
@@ -66,7 +66,6 @@ export const commentCtrl = {
       })
         .sort({ createdAt: -1 })
         .populate("writer", "nickname imageSrc");
-      console.log({ comment });
       res.status(200).json({ isOk: true, comment });
     } catch (err) {
       res.status(500).json(err);
