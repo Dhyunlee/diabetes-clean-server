@@ -19,7 +19,7 @@ export const commentCtrl = {
           .json({ isOk: false, msg: "해당 댓글이 존재하지 않습니다." });
       }
       await comment.updateOne({
-        $set: {isDeleted: true},
+        $set: { isDeleted: true },
       });
       return res
         .status(200)
@@ -39,10 +39,13 @@ export const commentCtrl = {
           .status(403)
           .json({ isOk: false, msg: "해당 댓글이 존재하지 않습니다." });
       }
-      await comment.deleteOne();
+
+      await comment.updateOne({
+        $set: req.body,
+      });
       return res
         .status(200)
-        .json({ isOk: false, msg: "해당 댓글이 수정되었습니다." });
+        .json({ isOk: true, msg: "해당 댓글이 수정되었습니다." });
     } catch (err) {
       res.status(500).json(err);
     }
@@ -52,7 +55,10 @@ export const commentCtrl = {
     try {
       const comment = await Comment.find({
         contentsId: req.params.contentsId,
-      }).sort({ createdAt: -1 }).populate("writer", "nickname imageSrc").populate("contentsId","_id content writer")
+      })
+        .sort({ createdAt: -1 })
+        .populate("writer", "nickname imageSrc")
+        .populate("contentsId", "_id content writer");
       res.status(200).json({ isOk: true, comment });
     } catch (err) {
       res.status(500).json(err);
