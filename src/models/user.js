@@ -1,9 +1,4 @@
 import { Schema, model } from "mongoose";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import config from "../config/key.js";
-
-const { JWT_SECRET } = config;
 
 const userSchema = Schema(
   {
