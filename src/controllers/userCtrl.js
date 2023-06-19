@@ -2,14 +2,6 @@ import User from "../models/user.js";
 import bcrypt from "bcrypt";
 
 export const userCtrl = {
-  getUserInfo: async (req, res) => {
-    try {
-      res.status(200).json({ isOk: true, userInfo: req.user});
-
-    } catch (err) {
-      res.status(500).json({err});
-    }
-  },
   postUser: async (req, res) => {
     const { email, nickname, password } = req.body;
     try {
@@ -29,4 +21,11 @@ export const userCtrl = {
   },
   updateUser: async () => {},
   deleteUser: async () => {},
+  getUserInfo: async (req, res) => {
+    try {
+      res.status(200).json({ isOk: true, userInfo: req.user });
+    } catch (err) {
+      res.status(500).json({ err });
+    }
+  },
 };
