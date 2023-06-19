@@ -22,7 +22,6 @@ export const authCtrl = {
         });
       } else {
         console.log(isMathchPw, "로그인성공");
-        // TODO: Create a token for the user
         const accessToken = JWT_AUTH.generateToken({ email: user.email });
         res
           .status(200)
