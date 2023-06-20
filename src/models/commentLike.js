@@ -1,13 +1,14 @@
 import { Schema, model } from "mongoose";
+const { ObjectId } = Schema.Types;
 
 const commentLikeSchema = Schema(
   {
     userId: {
-      type: Schema.Types.ObjectId,
+      type: ObjectId,
       ref: "User",
     },
     commentId: {
-      type: Schema.Types.ObjectId,
+      type: ObjectId,
       ref: "Comment",
     },
   },

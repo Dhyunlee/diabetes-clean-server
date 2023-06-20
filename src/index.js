@@ -10,6 +10,7 @@ import {
   commentRouter,
   contentsRouter,
   diabetesRouter,
+  followRouter
 } from "./routes/index.js";
 
 const app = express();
@@ -32,6 +33,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/diabetes", diabetesRouter);
 app.use("/api/v1/contents", contentsRouter);
 app.use("/api/v1/comment", commentRouter);
+app.use("/api/v1/follow", followRouter);
 app.use("/", (req, res) => res.json({ isSucess: true }));
 
 app.listen(PORT, () =>

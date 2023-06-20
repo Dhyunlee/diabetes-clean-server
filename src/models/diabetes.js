@@ -1,9 +1,10 @@
 import { Schema, model } from "mongoose";
+const { ObjectId } = Schema.Types;
 
 const diabetesSchema = Schema(
   {
     writer: {
-      type: Schema.Types.ObjectId,
+      type: ObjectId,
       ref: "User",
     },
     sugar_level: {

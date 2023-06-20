@@ -1,17 +1,18 @@
 import { Schema, model } from "mongoose";
+const { ObjectId } = Schema.Types;
 
 const commentSchema = Schema(
   {
     writer: {
-      type: Schema.Types.ObjectId,
+      type: ObjectId,
       ref: "User",
     },
     contentsId: {
-      type: Schema.Types.ObjectId,
+      type: ObjectId,
       ref: "Contents",
     },
     parentCommentId: {
-      type: Schema.Types.ObjectId,
+      type: ObjectId,
       ref: 'Comments',
     },
     content: {
