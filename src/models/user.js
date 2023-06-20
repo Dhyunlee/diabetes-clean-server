@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+const { ObjectId } = Schema.Types;
 
 const userSchema = Schema(
   {
@@ -26,9 +27,21 @@ const userSchema = Schema(
       type: String,
       max: 80,
     },
+    followers: [
+      {
+        type: ObjectId,
+        ref: "User",
+      },
+    ],
+    followings: [
+      {
+        type: ObjectId,
+        ref: "User",
+      },
+    ],
     token: {
       type: String,
-    }
+    },
   },
   {
     timestamps: true,

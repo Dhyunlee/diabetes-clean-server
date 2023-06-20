@@ -13,4 +13,11 @@ router.get(INDEX_PATH, auth, userCtrl.getUserInfo);
 // @desc       유저 회원가입
 router.post(INDEX_PATH, userCtrl.postUser);
 
+// @routes     patch api/v1/users/:id/follow
+// @desc       유저 팔로우
+router.patch("/:id/follow", auth, userCtrl.addFollow);
+
+// @routes     patch api/v1/users/:id/unfollow 
+// @desc       유저 언팔로우
+router.delete("/:id/unfollow", auth, userCtrl.unFollow);
 export default router;
