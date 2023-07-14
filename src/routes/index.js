@@ -9,5 +9,5 @@ export {
   authRouter,
   diabetesRouter,
   contentsRouter,
-  commentRouter,
+  commentRouter
 };

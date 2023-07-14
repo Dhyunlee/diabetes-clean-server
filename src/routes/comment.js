@@ -5,7 +5,7 @@ import {
   FIND_BY_ID,
   GET_FIND_BY_CONTENTS_ID,
   GET_USER_FIND_BY_ID,
-  INDEX_PATH,
+  INDEX_PATH
 } from "../constants/path.js";
 
 const router = express.Router();

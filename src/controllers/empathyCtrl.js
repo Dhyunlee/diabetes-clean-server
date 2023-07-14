@@ -1,10 +1,5 @@
-
 export const empathyCtrl = {
- empathy: async () => {
-  
- },
- unEmpathy: async () => {
-
- },
- getEmpathy: async () => {}
-}
+  empathy: async () => {},
+  unEmpathy: async () => {},
+  getEmpathy: async () => {}
+};

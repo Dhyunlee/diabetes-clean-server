@@ -1,8 +1,4 @@
 const commentLikeCtrl = {
-  postLike: async () => {
-
-  },
-  deleteLike: async () => {
-    
-  }
-}
+  postLike: async () => {},
+  deleteLike: async () => {}
+};

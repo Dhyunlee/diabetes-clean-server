@@ -18,14 +18,12 @@ export const authCtrl = {
       if (!isMathchPw) {
         res.status(401).json({
           isOk: false,
-          msg: "비밀번호가 일치하지 않습니다.",
+          msg: "비밀번호가 일치하지 않습니다."
         });
       } else {
         console.log(isMathchPw, "로그인성공");
         const accessToken = JWT_AUTH.generateToken({ email: user.email });
-        res
-          .status(200)
-          .json({ isOk: true, accessToken });
+        res.status(200).json({ isOk: true, accessToken });
       }
     } catch (err) {
       res.status(500).json(err);
@@ -54,5 +52,5 @@ export const authCtrl = {
       .status(200)
       .clearCookie("token")
       .json({ isOk: true, msg: "성공적으로 로그아웃되었습니다." });
-  },
+  }
 };

@@ -10,7 +10,7 @@ export const userCtrl = {
       const newUser = new User({
         email,
         nickname,
-        password: hashedPassword,
+        password: hashedPassword
       });
 
       await newUser.save();
@@ -32,7 +32,9 @@ export const userCtrl = {
         if (!user.followers.includes(reqCurrentUser)) {
           await user.updateOne({ $push: { followers: reqCurrentUser } });
           await currentUser.updateOne({ $push: { followings: reqUser } });
-          res.status(200).json({ isOk: true, msg: "성공적으로 팔로우했습니다." });
+          res
+            .status(200)
+            .json({ isOk: true, msg: "성공적으로 팔로우했습니다." });
         } else {
           res
             .status(403)
@@ -59,7 +61,9 @@ export const userCtrl = {
         if (user.followers.includes(reqCurrentUser)) {
           await user.updateOne({ $pull: { followers: reqCurrentUser } });
           await currentUser.updateOne({ $pull: { followings: reqUser } });
-          res.status(200).json({ isOk: true, msg: "성공적으로 언팔로우 되었습니다." });
+          res
+            .status(200)
+            .json({ isOk: true, msg: "성공적으로 언팔로우 되었습니다." });
         } else {
           res
             .status(403)
@@ -81,5 +85,5 @@ export const userCtrl = {
     } catch (err) {
       res.status(500).json({ err });
     }
-  },
+  }
 };

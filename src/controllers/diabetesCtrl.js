@@ -14,15 +14,16 @@ export const diabetesCtrl = {
   deleteDiabetes: async (req, res) => {
     try {
       const diabetes = await Diabetes.findById(req.params.id);
-      if(!diabetes) {
-        return res
-          .status(403)
-          .json({ isOk: false, msg: "해당 당수치 데이터가 존재하지 않습니다." });
+      if (!diabetes) {
+        return res.status(403).json({
+          isOk: false,
+          msg: "해당 당수치 데이터가 존재하지 않습니다."
+        });
       }
       await diabetes.deleteOne();
       return res
-      .status(200)
-      .json({ isOk: true, msg: "해당 당수치 데이터가 삭제되었습니다." });
+        .status(200)
+        .json({ isOk: true, msg: "해당 당수치 데이터가 삭제되었습니다." });
     } catch (err) {
       return res.status(500).json(err);
     }
@@ -30,17 +31,18 @@ export const diabetesCtrl = {
   updateDiabetes: async (req, res) => {
     try {
       const diabetes = await Diabetes.findById(req.params.id);
-      if(!diabetes) {
-        return res
-          .status(403)
-          .json({ isOk: false, msg: "해당 당수치 데이터가 존재하지 않습니다." });
+      if (!diabetes) {
+        return res.status(403).json({
+          isOk: false,
+          msg: "해당 당수치 데이터가 존재하지 않습니다."
+        });
       }
       await diabetes.updateOne({
-        $set: req.body,
+        $set: req.body
       });
       return res
-      .status(200)
-      .json({ isOk: true, msg: "해당 당수치 데이터가 수정되었습니다." });
+        .status(200)
+        .json({ isOk: true, msg: "해당 당수치 데이터가 수정되었습니다." });
     } catch (err) {
       return res.status(500).json(err);
     }
@@ -60,12 +62,13 @@ export const diabetesCtrl = {
     const diabetesId = req.params.id;
     try {
       const diabetes = await Diabetes.findById(diabetesId).populate(
-        "writer", "nickname" 
-        );
+        "writer",
+        "nickname"
+      );
       res.status(200).json({ isOk: true, diabetesInfo: diabetes ?? {} });
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);
     }
-  },
+  }
 };

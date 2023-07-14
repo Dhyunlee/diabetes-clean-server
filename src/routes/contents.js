@@ -5,7 +5,7 @@ import {
   FIND_BY_ID,
   GET_USER_CONTENTS,
   GET_USER_FIND_BY_ID,
-  INDEX_PATH,
+  INDEX_PATH
 } from "../constants/path.js";
 
 const router = express.Router();
@@ -27,7 +27,7 @@ router.delete(FIND_BY_ID, auth, contentsCtrl.deleteContents);
 router.get(INDEX_PATH, contentsCtrl.getAllContents);
 
 // @routes     GET api/v1/contents/users/:nickname
-// @desc       유저의 게시글 (내피드) 
+// @desc       유저의 게시글 (내피드)
 router.get(GET_USER_CONTENTS, contentsCtrl.getMyFeed);
 
 // @routes     GET api/v1/contents/:id

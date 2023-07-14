@@ -2,12 +2,15 @@ import User from "../models/user.js";
 import JWT_AUTH from "../utils/jwt_auth.js";
 
 let auth = async (req, res, next) => {
-  let accessToken = req.headers.hasOwnProperty("authorization") && req.headers.authorization.split("Bearer ")[1];
+  let accessToken =
+    // eslint-disable-next-line no-prototype-builtins
+    req.headers.hasOwnProperty("authorization") &&
+    req.headers.authorization.split("Bearer ")[1];
   if (!accessToken) {
     // 토큰 없음
     return res.status(401).json({ isOk: false, msg: "인증이 필요합니다." });
   }
-  
+
   // 토큰 검증
   try {
     const isVerifyToken = await JWT_AUTH.verifyToken(accessToken);

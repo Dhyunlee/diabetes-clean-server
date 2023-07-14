@@ -1,8 +1,4 @@
 export const contentsEmpathyCtrl = {
-  postEmpathy: async () => {
-
-  },
-  deleteEmpathy: async () => {
-    
-  }
+  postEmpathy: async () => {},
+  deleteEmpathy: async () => {}
 };

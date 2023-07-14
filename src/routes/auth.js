@@ -10,10 +10,9 @@ router.post(LOG_IN, authCtrl.login);
 
 // @routes     POST api/v1/auth/checkemail
 // @desc       이메일 중복 확인
-router.post(LOG_OUT, authCtrl.checkemail);
+router.post(CHECK_EMAIL, authCtrl.checkemail);
 
 // @routes     GET api/v1/auth/logout
 // @desc       로그아웃
-router.get(CHECK_EMAIL, authCtrl.logout);
-
+router.get(LOG_OUT, authCtrl.logout);
 export default router;

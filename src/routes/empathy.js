@@ -1,5 +1,6 @@
 import express from "express";
 import { empathyCtrl } from "../controllers/empathyCtrl";
+import auth from "../middleware/auth";
 const router = express.Router();
 
 // @routes     POST api/v1/empathy/contents/:id

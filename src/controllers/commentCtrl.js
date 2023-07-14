@@ -19,7 +19,7 @@ export const commentCtrl = {
           .json({ isOk: false, msg: "해당 댓글이 존재하지 않습니다." });
       }
       await comment.updateOne({
-        $set: { isDeleted: true },
+        $set: { isDeleted: true }
       });
       return res
         .status(200)
@@ -41,7 +41,7 @@ export const commentCtrl = {
       }
 
       await comment.updateOne({
-        $set: req.body,
+        $set: req.body
       });
       return res
         .status(200)
@@ -54,7 +54,7 @@ export const commentCtrl = {
     //해당 게시글에 작성된 모든 댓글
     try {
       const comment = await Comment.find({
-        contentsId: req.params.contentsId,
+        contentsId: req.params.contentsId
       })
         .sort({ createdAt: -1 })
         .populate("writer", "nickname imageSrc")
@@ -68,7 +68,7 @@ export const commentCtrl = {
     //유저가 작성한 댓글 모음
     try {
       const comment = await Comment.find({
-        writer: req.params.userId,
+        writer: req.params.userId
       })
         .sort({ createdAt: -1 })
         .populate("writer", "nickname imageSrc");
@@ -76,5 +76,5 @@ export const commentCtrl = {
     } catch (err) {
       res.status(500).json(err);
     }
-  },
+  }
 };

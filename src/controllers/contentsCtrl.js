@@ -20,7 +20,7 @@ export const contentsCtrl = {
           .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
       }
       await contents.updateOne({
-        $set: { isDeleted: true },
+        $set: { isDeleted: true }
       });
       return res
         .status(200)
@@ -38,7 +38,7 @@ export const contentsCtrl = {
           .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
       }
       await contents.updateOne({
-        $set: req.body,
+        $set: req.body
       });
       return res
         .status(200)
@@ -47,7 +47,24 @@ export const contentsCtrl = {
       return res.status(500).json(err);
     }
   },
+  // getAllContents: async (req, res) => {
+  //   try {
+  //     const contents = await Contents.find()
+  //       .sort({ createdAt: -1 })
+  //       .populate("writer", "nickname imageSrc");
+  //     if (!contents) {
+  //       return res
+  //         .status(403)
+  //         .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
+  //     }
+  //     res.status(200).json({ isOk: true, contents });
+  //   } catch (err) {
+  //     return res.status(500).json(err);
+  //   }
+  // },
   getAllContents: async (req, res) => {
+    const maxContents = 10;
+    const maxPage = 10;
     try {
       const contents = await Contents.find()
         .sort({ createdAt: -1 })
@@ -65,7 +82,7 @@ export const contentsCtrl = {
   getMyFeed: async (req, res) => {
     try {
       const { nickname } = req.params;
-      const {_id} = await User.findOne({nickname})
+      const { _id } = await User.findOne({ nickname });
       const contents = await Contents.find()
         .where("writer")
         .equals(_id)
@@ -97,5 +114,5 @@ export const contentsCtrl = {
     } catch (err) {
       return res.status(500).json(err);
     }
-  },
+  }
 };
