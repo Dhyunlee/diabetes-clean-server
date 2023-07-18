@@ -1,7 +1,7 @@
 import express from "express";
 import auth from "../middleware/auth.js";
 import { userCtrl } from "../controllers/userCtrl.js";
-import { INDEX_PATH } from "../constants/path.js";
+import { FIND_BY_ID, INDEX_PATH } from "../constants/path.js";
 
 const router = express.Router();
 
@@ -16,6 +16,14 @@ router.get("/all-users", userCtrl.getUsersInfo);
 // @routes     POST api/v1/users
 // @desc       유저 회원가입
 router.post(INDEX_PATH, userCtrl.postUser);
+
+// @routes     patch api/v1/users
+// @desc       유저 정보 수정
+router.patch(FIND_BY_ID, auth, userCtrl.updateUser);
+
+// @routes     patch api/v1/users
+// @desc       유저 삭제
+router.delete(FIND_BY_ID, auth, userCtrl.deleteUser);
 
 // @routes     patch api/v1/users/:id/follow
 // @desc       유저 팔로우

@@ -54,6 +54,7 @@ export const userCtrl = {
         보안상 삭제하는 게 좋다고 판단. 
       */
       await user.deleteOne();
+      return res.status(200).json({ isOk: true, msg: "회원 탈퇴되었습니다." });
     } catch (err) {
       res.status(500).json(err);
     }
