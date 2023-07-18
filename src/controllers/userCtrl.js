@@ -19,8 +19,45 @@ export const userCtrl = {
       res.status(500).json(err);
     }
   },
-  updateUser: async () => {},
-  deleteUser: async () => {},
+  updateUser: async (req, res) => {
+    try {
+      const user = await User.findById(req.params.id);
+
+      if (!user) {
+        return res.status(403).json({
+          isOk: false,
+          msg: "해당 유저가 존재하지 않습니다."
+        });
+      }
+      await user.updateOne({
+        $set: req.body
+      });
+      return res
+        .status(200)
+        .json({ isOk: true, msg: "해당 유저 정보가 수정되었습니다." });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+  deleteUser: async (req, res) => {
+    try {
+      const user = await User.findById(req.params.id);
+
+      if (!user) {
+        return res.status(403).json({
+          isOk: false,
+          msg: "해당 유저가 존재하지 않습니다."
+        });
+      }
+      /* 
+        원래 유저 정보는 나중을 위해 보관하는게 좋지만
+        보안상 삭제하는 게 좋다고 판단. 
+      */
+      await user.deleteOne();
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
   addFollow: async (req, res) => {
     const reqUser = req.params.id;
     const reqCurrentUser = req.body.userId;
@@ -82,6 +119,15 @@ export const userCtrl = {
   getUserInfo: async (req, res) => {
     try {
       res.status(200).json({ isOk: true, userInfo: req.user });
+    } catch (err) {
+      res.status(500).json({ err });
+    }
+  },
+  getUsersInfo: async (req, res) => {
+    try {
+      const users = await User.find();
+      console.log(users);
+      res.status(200).json({ isOk: true, usersInfo: users });
     } catch (err) {
       res.status(500).json({ err });
     }

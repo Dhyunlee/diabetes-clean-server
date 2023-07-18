@@ -1,15 +1,15 @@
 import { Schema, model } from "mongoose";
 const { ObjectId } = Schema.Types;
 
-const empathySchema = Schema({
+const empathySchema = new Schema({
   userId: {
     type: ObjectId,
-    ref: "User",
+    ref: "User"
   },
   contentsId: {
     type: ObjectId,
-    ref: "Contents",
-  },
+    ref: "Contents"
+  }
 });
 
 export const Empathy = model("Empathy", empathySchema);

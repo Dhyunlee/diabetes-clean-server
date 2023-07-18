@@ -9,6 +9,10 @@ const router = express.Router();
 // @desc       유저 정보
 router.get(INDEX_PATH, auth, userCtrl.getUserInfo);
 
+// @routes     GET api/v1/users/all-users
+// @desc       모든유저 정보
+router.get("/all-users", userCtrl.getUsersInfo);
+
 // @routes     POST api/v1/users
 // @desc       유저 회원가입
 router.post(INDEX_PATH, userCtrl.postUser);

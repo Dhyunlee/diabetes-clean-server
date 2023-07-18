@@ -1,32 +1,32 @@
 import { Schema, model } from "mongoose";
 const { ObjectId } = Schema.Types;
 
-const diabetesSchema = Schema(
+const diabetesSchema = new Schema(
   {
     writer: {
       type: ObjectId,
-      ref: "User",
+      ref: "User"
     },
     sugar_level: {
       type: Number,
-      require: true,
+      require: true
     },
     slot: {
       type: String,
-      require: true,
+      require: true
     },
     note: {
       type: String,
-      default: "",
+      default: ""
     },
     createdAt: {
       type: String,
       default: new Date(),
-      require: true,
-    },
+      require: true
+    }
   },
   {
-    timestamps: false,
+    timestamps: false
   }
 );
 

@@ -1,30 +1,30 @@
 import { Schema, model } from "mongoose";
 const { ObjectId } = Schema.Types;
 
-const contentsSchema = Schema(
+const contentsSchema = new Schema(
   {
     writer: {
       type: ObjectId,
-      ref: "User",
+      ref: "User"
     },
     content: {
-      type: String,
+      type: String
     },
     imageName: {
       type: String,
-      default: ''
+      default: ""
     },
     imageUrl: {
       type: String,
-      default: ''
+      default: ""
     },
     isDeleted: {
       type: Boolean,
-      default: false, /* true이면 삭제된 상태 */
-    },
+      default: false /* true이면 삭제된 상태 */
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 

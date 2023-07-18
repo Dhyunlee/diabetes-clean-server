@@ -1,19 +1,19 @@
 import { Schema, model } from "mongoose";
 const { ObjectId } = Schema.Types;
 
-const contentsEmpathySchema = Schema(
+const contentsEmpathySchema = new Schema(
   {
     userId: {
       type: ObjectId,
-      ref: "User",
+      ref: "User"
     },
     contentsId: {
       type: ObjectId,
-      ref: "Contents",
-    },
+      ref: "Contents"
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 

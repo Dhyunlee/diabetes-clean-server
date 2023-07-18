@@ -1,30 +1,30 @@
 import { Schema, model } from "mongoose";
 const { ObjectId } = Schema.Types;
 
-const commentSchema = Schema(
+const commentSchema = new Schema(
   {
     writer: {
       type: ObjectId,
-      ref: "User",
+      ref: "User"
     },
     contentsId: {
       type: ObjectId,
-      ref: "Contents",
+      ref: "Contents"
     },
     parentCommentId: {
       type: ObjectId,
-      ref: 'Comments',
+      ref: "Comments"
     },
     content: {
-      type: String,
+      type: String
     },
     isDeleted: {
       type: Boolean,
-      default: false, /* true이면 삭제된 상태 */
-    },
+      default: false /* true이면 삭제된 상태 */
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 

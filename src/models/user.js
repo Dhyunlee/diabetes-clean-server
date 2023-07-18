@@ -1,50 +1,50 @@
 import { Schema, model } from "mongoose";
 const { ObjectId } = Schema.Types;
 
-const userSchema = Schema(
+const userSchema = new Schema(
   {
     email: {
       type: String,
       unique: true,
       maxlength: 50,
-      require: true,
+      require: true
     },
     nickname: {
       type: String,
-      maxlength: 50,
+      maxlength: 50
     },
     password: {
       type: String,
       minglength: 5,
-      require: true,
+      require: true
     },
     imageSrc: {
       type: String,
-      default: "",
+      default: ""
     },
     aboutMe: {
       //유저 소개
       type: String,
-      max: 80,
+      max: 80
     },
     followers: [
       {
         type: ObjectId,
-        ref: "User",
-      },
+        ref: "User"
+      }
     ],
     followings: [
       {
         type: ObjectId,
-        ref: "User",
-      },
+        ref: "User"
+      }
     ],
     token: {
-      type: String,
-    },
+      type: String
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
