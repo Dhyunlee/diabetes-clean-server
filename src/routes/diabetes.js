@@ -27,6 +27,6 @@ router.get(GET_USER_FIND_BY_ID, auth, diabetesCtrl.getAllDiabetes);
 
 // @routes     GET api/v1/diabetes/:id
 // @desc       Diabetes 상세 조회
-router.get(FIND_BY_ID, auth, diabetesCtrl.getFindById);
+router.get(FIND_BY_ID, auth, diabetesCtrl.getDiabetesFindById);
 
 export default router;

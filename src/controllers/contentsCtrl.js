@@ -14,7 +14,7 @@ export const contentsCtrl = {
   deleteContents: async (req, res) => {
     try {
       const contents = await Contents.findById(req.params.id);
-      if (!contents) {
+      if (!contents.length) {
         return res
           .status(403)
           .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
@@ -32,7 +32,7 @@ export const contentsCtrl = {
   updateContents: async (req, res) => {
     try {
       const contents = await Contents.findById(req.params.id);
-      if (!contents) {
+      if (!contents.length) {
         return res
           .status(403)
           .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
@@ -52,14 +52,14 @@ export const contentsCtrl = {
       const contents = await Contents.find()
         .sort({ createdAt: -1 })
         .populate("writer", "nickname imageSrc");
-      if (!contents) {
+      if (!contents.length) {
         return res
           .status(403)
           .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
       }
       res.status(200).json({ isOk: true, contents });
     } catch (err) {
-      return res.status(500).json(err);
+      res.status(500).json(err);
     }
   },
   // getAllContents: async (req, res) => {
@@ -87,8 +87,10 @@ export const contentsCtrl = {
         .where("writer")
         .equals(_id)
         .sort({ createdAt: -1 })
-        .populate("writer", "email nickname imageSrc");
-      if (!contents) {
+        .populate("writer", "email nickname imageSrc aboutMe");
+      console.log(contents);
+      //        .populate("writer", "nickname imageSrc");
+      if (!contents.length) {
         return res
           .status(403)
           .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
@@ -99,13 +101,13 @@ export const contentsCtrl = {
       return res.status(500).json(err);
     }
   },
-  getContentsFindOne: async (req, res) => {
+  getContentsFindById: async (req, res) => {
     try {
       const contents = await Contents.findById(req.params.id).populate(
         "writer",
         "nickname imageSrc"
       );
-      if (!contents) {
+      if (!contents.length) {
         return res
           .status(403)
           .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
