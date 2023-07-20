@@ -58,7 +58,7 @@ export const diabetesCtrl = {
       return res.status(500).json(err);
     }
   },
-  getFindById: async (req, res) => {
+  getDiabetesFindById: async (req, res) => {
     const diabetesId = req.params.id;
     try {
       const diabetes = await Diabetes.findById(diabetesId).populate(
