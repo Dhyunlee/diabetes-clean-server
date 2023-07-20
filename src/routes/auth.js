@@ -1,6 +1,7 @@
 import express from "express";
 import { authCtrl } from "../controllers/authCtrl.js";
-import { CHECK_EMAIL, LOG_IN, LOG_OUT } from "../constants/path.js";
+import { CHECK_EMAIL, INDEX_PATH, LOG_IN, LOG_OUT } from "../constants/path.js";
+import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -15,4 +16,9 @@ router.post(CHECK_EMAIL, authCtrl.checkemail);
 // @routes     GET api/v1/auth/logout
 // @desc       로그아웃
 router.get(LOG_OUT, authCtrl.logout);
+
+// @routes     GET api/v1/auth
+// @desc       토큰이 유효하다면, 유저 정보를 클라이언트로 전달
+router.get(INDEX_PATH, auth, authCtrl.getUserIdByToken);
+
 export default router;

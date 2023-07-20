@@ -23,7 +23,9 @@ export const authCtrl = {
       } else {
         console.log(isMathchPw, "로그인성공");
         const accessToken = JWT_AUTH.generateToken({ email: user.email });
-        res.status(200).json({ isOk: true, accessToken });
+        res
+          .status(200)
+          .json({ isOk: true, accessToken, msg: "로그인 인증했습니다." });
       }
     } catch (err) {
       res.status(500).json(err);
@@ -52,5 +54,16 @@ export const authCtrl = {
       .status(200)
       .clearCookie("token")
       .json({ isOk: true, msg: "성공적으로 로그아웃되었습니다." });
+  },
+  /**
+   * 인증되었는지를 확인하기 위함
+   * @description 토큰이 유효하다면, 유저 정보를 클라이언트로 전달합니다.
+   */
+  getUserIdByToken: async (req, res) => {
+    try {
+      res.status(200).json({ isOk: true, userInfo: req.user });
+    } catch (err) {
+      res.status(500).json({ err });
+    }
   }
 };
