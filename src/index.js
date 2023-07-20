@@ -13,13 +13,13 @@ import {
 } from "./routes/index.js";
 
 const app = express();
-const { PORT, COOKIE_SECRET } = config;
+const { PORT, COOKIE_SECRET, CLIENT_URL } = config;
 
 dbconnect();
 app.use(morgan("dev"));
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: CLIENT_URL || "http://localhost:3000",
     credentials: true
   })
 );
@@ -32,7 +32,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/diabetes", diabetesRouter);
 app.use("/api/v1/contents", contentsRouter);
 app.use("/api/v1/comment", commentRouter);
-app.use("/", (req, res) => res.json({ isSucess: true }));
+app.use("/", (req, res) => res.send("연결 완료"));
 
 app.listen(PORT, () =>
   console.log(`Server Listening on http://localhost:${PORT}`)
