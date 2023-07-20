@@ -59,22 +59,49 @@ export const userCtrl = {
       res.status(500).json(err);
     }
   },
-  addFollow: async (req, res) => {
-    const reqUser = req.params.id;
-    const reqCurrentUser = req.body.userId;
+  /**
+   * 유저 정보를 불러오기
+   * @description 클라이언트로부터 전달받은 id를 통해 유저 정보를 전달합니다.
+   */
+  getUserFindById: async (req, res) => {
     try {
-      if (reqUser !== reqCurrentUser) {
-        const user = await User.findById(reqUser);
-        const currentUser = await User.findById(reqCurrentUser);
-
-        if (!user.followers.includes(reqCurrentUser)) {
-          await user.updateOne({ $push: { followers: reqCurrentUser } });
-          await currentUser.updateOne({ $push: { followings: reqUser } });
-          res
-            .status(200)
-            .json({ isOk: true, msg: "성공적으로 팔로우했습니다." });
+      const user = await User.findById(req.params.id);
+      if (!user) {
+        return res.status(403).json({
+          isOk: false,
+          msg: "해당 유저가 존재하지 않습니다."
+        });
+      }
+      res.status(200).json({ isOk: true, userInfo: user });
+    } catch (err) {
+      res.status(500).json({ err });
+    }
+  },
+  //개발용으로 개발 완료후 삭제
+  getUsersInfo: async (req, res) => {
+    try {
+      const user = await User.find();
+      res.status(200).json({ isOk: true, user });
+    } catch (err) {
+      console.log({ err });
+      res.status(500).json({ err });
+    }
+  },
+  addFollow: async (req, res) => {
+    try {
+      if (req.params.id !== req.user) {
+        const currentUser = await User.findById(req.user);
+        const targetUser = await User.findById(req.params.id);
+        if (!currentUser.followings.includes(targetUser._id)) {
+          await currentUser.updateOne({
+            $push: { followings: targetUser._id }
+          });
+          await targetUser.updateOne({
+            $push: { followers: currentUser._id }
+          });
+          return res.status(200).json({ isOk: true, msg: "팔로우했습니다." });
         } else {
-          res
+          return res
             .status(403)
             .json({ isOk: false, msg: "이미 팔로우한 유저입니다." });
         }
@@ -84,51 +111,55 @@ export const userCtrl = {
           .json({ isOk: false, msg: "자신을 팔로우할 수는 없습니다." });
       }
     } catch (err) {
-      console.err(err);
       res.status(500).json(err);
     }
   },
   unFollow: async (req, res) => {
-    const reqUser = req.params.id;
-    const reqCurrentUser = req.body.userId;
     try {
-      if (reqUser !== reqCurrentUser) {
-        const user = await User.findById(reqUser);
-        const currentUser = await User.findById(reqCurrentUser);
-
-        if (user.followers.includes(reqCurrentUser)) {
-          await user.updateOne({ $pull: { followers: reqCurrentUser } });
-          await currentUser.updateOne({ $pull: { followings: reqUser } });
-          res
+      if (req.params.id !== req.user) {
+        const currentUser = await User.findById(req.user);
+        const targetUser = await User.findById(req.params.id);
+        if (currentUser.followings.includes(targetUser._id)) {
+          await currentUser.updateOne({
+            $pull: { followings: targetUser._id }
+          });
+          await targetUser.updateOne({
+            $pull: { followers: currentUser._id }
+          });
+          return res
             .status(200)
-            .json({ isOk: true, msg: "성공적으로 언팔로우 되었습니다." });
+            .json({ isOk: true, msg: "팔로우 취소되었습니다." });
         } else {
-          res
+          return res
             .status(403)
             .json({ isOk: false, msg: "팔로우한 대상이 아닙니다." });
         }
       } else {
         res
           .status(403)
-          .json({ isOk: false, msg: "자신을 언팔로우할 수는 없습니다." });
+          .json({ isOk: false, msg: "자신을 팔로우 취소할 수는 없습니다." });
       }
     } catch (err) {
-      console.err(err);
+      console.log(err);
       res.status(500).json(err);
     }
   },
-  getUserInfo: async (req, res) => {
+  getFollowFindById: async (req, res) => {
     try {
-      res.status(200).json({ isOk: true, userInfo: req.user });
-    } catch (err) {
-      res.status(500).json({ err });
-    }
-  },
-  getUsersInfo: async (req, res) => {
-    try {
-      const users = await User.find();
-      console.log(users);
-      res.status(200).json({ isOk: true, usersInfo: users });
+      const user = await User.findById(req.params.id);
+      if (!user) {
+        return res.status(403).json({
+          isOk: false,
+          msg: "해당 유저가 존재하지 않습니다."
+        });
+      }
+      const { _id, nickname, followers, followings } = user;
+      const followInfo = {
+        writer: { _id, nickname },
+        followers,
+        followings
+      };
+      res.status(200).json({ isOk: true, followInfo });
     } catch (err) {
       res.status(500).json({ err });
     }
