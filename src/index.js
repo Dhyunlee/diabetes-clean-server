@@ -4,6 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import config from "./config/key.js";
 import dbconnect from "./dbconfig.js";
+import helmet from "helmet";
 import {
   usersRouter,
   authRouter,
@@ -23,6 +24,7 @@ app.use(
     credentials: true
   })
 );
+app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser(COOKIE_SECRET));
