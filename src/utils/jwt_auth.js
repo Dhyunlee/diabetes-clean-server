@@ -12,13 +12,13 @@ const JWT_AUTH = {
   generateToken: (payLoad) => {
     return jwt.sign(payLoad, secret, {
       algorithm,
-      expiresIn: shortExpiresIn,
+      expiresIn: shortExpiresIn
     });
   },
   generateRefleshToken: () => {
     return jwt.sign({}, secret, {
       algorithm,
-      expiresIn: longExpiresIn,
+      expiresIn: longExpiresIn
     });
   },
   verifyToken: async (token) => {
@@ -48,7 +48,7 @@ const JWT_AUTH = {
         }
       }
     }
-  },
+  }
 };
 
 export default JWT_AUTH;

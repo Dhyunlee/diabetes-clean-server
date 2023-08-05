@@ -4,7 +4,6 @@ import { contentsCtrl } from "../controllers/contentsCtrl.js";
 import {
   FIND_BY_ID,
   GET_USER_CONTENTS,
-  GET_USER_FIND_BY_ID,
   INDEX_PATH
 } from "../constants/path.js";
 

@@ -1,5 +1,4 @@
 import Diabetes from "../models/diabetes.js";
-import User from "../models/user.js";
 
 export const diabetesCtrl = {
   postDiabetes: async (req, res) => {
@@ -48,7 +47,7 @@ export const diabetesCtrl = {
     }
   },
   getAllDiabetes: async (req, res) => {
-    const writer = req.params.userId;
+    const writer = req.params.id;
     try {
       const diabetes = await Diabetes.find({ writer })
         .sort({ createdAt: -1 }) // 내림차순 정렬
