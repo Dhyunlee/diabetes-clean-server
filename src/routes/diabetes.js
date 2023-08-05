@@ -21,7 +21,7 @@ router.patch(FIND_BY_ID, auth, diabetesCtrl.updateDiabetes);
 // @desc       Diabetes 데이터 삭제
 router.delete(FIND_BY_ID, auth, diabetesCtrl.deleteDiabetes);
 
-// @routes     GET api/v1/diabetes/users/:userId
+// @routes     GET api/v1/diabetes/users/:id
 // @desc       Diabetes 유저의 모든 데이터 조회
 router.get(GET_USER_FIND_BY_ID, auth, diabetesCtrl.getAllDiabetes);
 

@@ -54,7 +54,7 @@ export const commentCtrl = {
     //해당 게시글에 작성된 모든 댓글
     try {
       const comment = await Comment.find({
-        contentsId: req.params.contentsId
+        contentsId: req.params.id
       })
         .sort({ createdAt: -1 })
         .populate("writer", "nickname imageSrc")
