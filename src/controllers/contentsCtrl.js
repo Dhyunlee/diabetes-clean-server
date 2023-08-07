@@ -1,4 +1,5 @@
 import Contents from "../models/contents.js";
+import { Like } from "../models/like.js";
 import User from "../models/user.js";
 
 export const contentsCtrl = {
@@ -62,23 +63,6 @@ export const contentsCtrl = {
       res.status(500).json(err);
     }
   },
-  // getAllContents: async (req, res) => {
-  //   const maxContents = 10;
-  //   const maxPage = 10;
-  //   try {
-  //     const contents = await Contents.find()
-  //       .sort({ createdAt: -1 })
-  //       .populate("writer", "nickname imageSrc");
-  //     if (!contents) {
-  //       return res
-  //         .status(403)
-  //         .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
-  //     }
-  //     res.status(200).json({ isOk: true, contents });
-  //   } catch (err) {
-  //     return res.status(500).json(err);
-  //   }
-  // },
   getMyFeed: async (req, res) => {
     try {
       const { nickname } = req.params;
@@ -115,6 +99,31 @@ export const contentsCtrl = {
       res.status(200).json({ isOk: true, contentsInfo: contents });
     } catch (err) {
       return res.status(500).json(err);
+    }
+  },
+
+  //내 관심글 가져오기
+  getLikedMyContents: async (req, res) => {
+    console.log("내 관심글 가져오기");
+    try {
+      const like = await Like.find()
+        .where({ userId: req.params.id })
+        .where({ contentsType: "contents" })
+        .select("_id contentsId userId")
+        .sort({ createdAt: -1 })
+        .populate("userId", "email nickname imageSrc aboutMe")
+        .populate("contentsId");
+
+      if (!like) {
+        return res.status(403).json({
+          isOk: false,
+          msg: "해당 게시글의 좋아요 정보가 존재하지 않습니다."
+        });
+      }
+      res.status(200).json({ isOk: true, like });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ isOk: false, err });
     }
   }
 };

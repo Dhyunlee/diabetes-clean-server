@@ -33,4 +33,8 @@ router.get(FIND_BY_ID, contentsCtrl.getContentsFindById);
 // @desc       유저의 게시글 (내피드)
 router.get(GET_USER_CONTENTS, contentsCtrl.getMyFeed);
 
+// @routes     GET api/v1/contents/like/users/:nickname
+// @desc       내 관심 게시글, id: userId
+router.get("/like/users/:id", auth, contentsCtrl.getLikedMyContents);
+
 export default router;

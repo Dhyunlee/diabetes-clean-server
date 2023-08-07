@@ -1,6 +1,7 @@
 import Comment from "../models/comment.js";
 
 export const commentCtrl = {
+  // 댓글 등록
   postComment: async (req, res) => {
     const comment = new Comment(req.body);
     try {
@@ -10,6 +11,7 @@ export const commentCtrl = {
       res.status(500).json(err);
     }
   },
+  // 댓글 삭제
   deleteComment: async (req, res) => {
     try {
       const comment = await Comment.findById(req.params.id);

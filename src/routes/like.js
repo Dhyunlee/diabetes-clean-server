@@ -27,9 +27,4 @@ router.get(GET_CONTENTS_FIND_BY_ID, likeCtrl.getContentsLike);
 // @routes     GET api/v1/like/comment/:id
 // @desc       like 데이터 조회, id: commentId 또는 contentsId
 router.get(GET_COMMENT_FIND_BY_ID, likeCtrl.getCommentsLike);
-
-// @routes     GET api/v1/like/users/:id
-// @desc       내 관심 게시글, id: userId
-router.get("/users/:id", auth, likeCtrl.getMyContentsLike);
-
 export default router;

@@ -111,32 +111,6 @@ export const likeCtrl = {
       res.status(500).json({ isOk: false, err });
     }
   },
-  getMyContentsLike: async (req, res) => {
-    //내 관심글 가져오기
-    //userId로 가져오기
-    // const like = await Like.find({
-    //   userId: req.params.id
-    // });
-    const like = await Like.find()
-      .where({ userId: req.params.id })
-      .where({ contentsType: "contents" })
-      .populate("contentsId");
-
-    if (!like) {
-      return res.status(403).json({
-        isOk: false,
-        msg: "해당 게시글의 좋아요 정보가 존재하지 않습니다."
-      });
-    }
-
-    try {
-      console.log({ like });
-      res.status(200).json({ isOk: true, like });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ isOk: false, err });
-    }
-  },
   getCommentsLike: async (req, res) => {
     //가져올때는 request parameter로 요청 받기
     const like = await Like.find()
