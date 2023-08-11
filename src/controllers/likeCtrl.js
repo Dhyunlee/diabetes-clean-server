@@ -8,16 +8,16 @@ function createContentsOrCommentObj(req) {
   if (req.body.contentsId) {
     //userId: 로그인한 유저
     variable = {
-      userId: req.body.userId,
-      contentsId: req.body.contentsId,
+      writer: req.body.userId,
+      contents: req.body.contentsId,
       contentsType: "contents"
     };
     return variable;
   } else {
     variable = {
-      commentId: req.body.commentId,
-      userId: req.body.userId,
-      contentsType: "comment"
+      comments: req.body.commentId,
+      writer: req.body.userId,
+      contentsType: "comments"
     };
     return variable;
   }
@@ -28,6 +28,7 @@ export const likeCtrl = {
     let like;
     if (req.body.contentsId) {
       const variable = createContentsOrCommentObj(req);
+      console.log(variable);
       const findLike = await Like.find(variable);
       console.log({ findLike });
       if (findLike.length) {
@@ -61,9 +62,9 @@ export const likeCtrl = {
     console.log("컨텐츠 취소");
     try {
       await Like.find()
-        .where("userId")
+        .where("writer")
         .equals(req.params.id)
-        .deleteOne({ contentsId: req.body.contentsId });
+        .deleteOne({ contents: req.body.contentsId });
       return res
         .status(200)
         .json({ isOk: true, msg: "해당 컨텐츠의 좋아요가 취소되었습니다." });
@@ -78,9 +79,9 @@ export const likeCtrl = {
     // const like = await Like.findById(req.params.id);
     try {
       await Like.find()
-        .where("userId")
+        .where("writer")
         .equals(req.params.id)
-        .deleteOne({ commentId: req.body.commentId });
+        .deleteOne({ comments: req.body.commentId });
       return res
         .status(200)
         .json({ isOk: true, msg: "해당 컨텐츠의 좋아요가 취소되었습니다." });
@@ -92,9 +93,9 @@ export const likeCtrl = {
     //가져올때는 request parameter로 요청 받기
     const like = await Like.find()
       .where({
-        contentsId: req.params.id
+        contents: req.params.id
       })
-      .populate("contentsId");
+      .populate("contents");
 
     if (!like) {
       return res.status(403).json({
@@ -115,9 +116,9 @@ export const likeCtrl = {
     //가져올때는 request parameter로 요청 받기
     const like = await Like.find()
       .where({
-        commentId: req.params.id
+        comments: req.params.id
       })
-      .populate("commentId");
+      .populate("comments");
     if (!like) {
       return res.status(403).json({
         isOk: false,

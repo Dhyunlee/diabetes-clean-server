@@ -63,6 +63,24 @@ export const contentsCtrl = {
       res.status(500).json(err);
     }
   },
+  // 상세 게시글
+  getContentsFindById: async (req, res) => {
+    try {
+      const contents = await Contents.findById(req.params.id).populate(
+        "writer",
+        "nickname imageSrc"
+      );
+      if (!contents.length) {
+        return res
+          .status(403)
+          .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
+      }
+      res.status(200).json({ isOk: true, contentsInfo: contents });
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  },
+  //내피드
   getMyFeed: async (req, res) => {
     try {
       const { nickname } = req.params;
@@ -85,34 +103,22 @@ export const contentsCtrl = {
       return res.status(500).json(err);
     }
   },
-  getContentsFindById: async (req, res) => {
-    try {
-      const contents = await Contents.findById(req.params.id).populate(
-        "writer",
-        "nickname imageSrc"
-      );
-      if (!contents.length) {
-        return res
-          .status(403)
-          .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
-      }
-      res.status(200).json({ isOk: true, contentsInfo: contents });
-    } catch (err) {
-      return res.status(500).json(err);
-    }
-  },
-
   //내 관심글 가져오기
   getLikedMyContents: async (req, res) => {
     console.log("내 관심글 가져오기");
     try {
+      const { nickname } = req.params;
+      const { _id } = await User.findOne({ nickname });
       const like = await Like.find()
-        .where({ userId: req.params.id })
+        .where("writer")
+        .equals(_id)
         .where({ contentsType: "contents" })
-        .select("_id contentsId userId")
         .sort({ createdAt: -1 })
-        .populate("userId", "email nickname imageSrc aboutMe")
-        .populate("contentsId");
+        .select("_id contents")
+        .populate({
+          path: "contents",
+          populate: { path: "writer", select: "_id email nickname imageSrc" }
+        });
 
       if (!like) {
         return res.status(403).json({

@@ -2,18 +2,18 @@ import { Schema, model } from "mongoose";
 const { ObjectId } = Schema.Types;
 
 const LikeSchema = new Schema({
-  userId: {
+  writer: {
     type: ObjectId,
     ref: "User"
   },
   contentsType: {
     type: String
   },
-  contentsId: {
+  contents: {
     type: ObjectId,
     ref: "Contents"
   },
-  commentId: {
+  comments: {
     type: ObjectId,
     ref: "Comment"
   }
