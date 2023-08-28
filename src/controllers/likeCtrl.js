@@ -105,7 +105,6 @@ export const likeCtrl = {
     }
 
     try {
-      console.log({ like });
       res.status(200).json({ isOk: true, like });
     } catch (err) {
       console.log(err);

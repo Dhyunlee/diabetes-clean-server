@@ -1,6 +1,7 @@
 import Contents from "../models/contents.js";
 import { Like } from "../models/like.js";
 import User from "../models/user.js";
+import qs from "qs";
 
 export const contentsCtrl = {
   postContents: async (req, res) => {
@@ -15,7 +16,8 @@ export const contentsCtrl = {
   deleteContents: async (req, res) => {
     try {
       const contents = await Contents.findById(req.params.id);
-      if (!contents.length) {
+      console.log(contents);
+      if (!contents._id) {
         return res
           .status(403)
           .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
@@ -33,7 +35,7 @@ export const contentsCtrl = {
   updateContents: async (req, res) => {
     try {
       const contents = await Contents.findById(req.params.id);
-      if (!contents.length) {
+      if (!contents._id) {
         return res
           .status(403)
           .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
@@ -48,10 +50,23 @@ export const contentsCtrl = {
       return res.status(500).json(err);
     }
   },
+  // /contents?page=1&size=10
   getAllContents: async (req, res) => {
+    const { page, size } = qs.parse(req.query);
+
     try {
+      const currentPage = parseInt(page || 1); // 현재 페이지, default: 1
+      const listSize = parseInt(size || 10); //한 페이지당 보여줄 게시글 수, default: 1
+      const totalContents = await Contents.countDocuments({}); //총 컨텐츠 갯수
+      if (!totalContents)
+        return res
+          .status(400)
+          .json({ isOk: false, msg: "불러올 컨텐츠가 없습니다." });
+
       const contents = await Contents.find()
-        .sort({ createdAt: -1 })
+        .sort({ createdAt: -1 }) //데이터 최신순으로 정렬
+        .skip(listSize * (currentPage - 1))
+        .limit(listSize)
         .populate("writer", "nickname imageSrc");
       if (!contents.length) {
         return res
@@ -70,7 +85,7 @@ export const contentsCtrl = {
         "writer",
         "nickname imageSrc"
       );
-      if (!contents.length) {
+      if (contents._id) {
         return res
           .status(403)
           .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
