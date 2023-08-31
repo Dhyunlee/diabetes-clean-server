@@ -1,48 +1,39 @@
 import express from "express";
-import bcrypt from "bcrypt";
 import auth from "../middleware/auth.js";
-import User from "../models/user.js";
+import { userCtrl } from "../controllers/userCtrl.js";
+import { FIND_BY_ID, INDEX_PATH } from "../constants/path.js";
 
 const router = express.Router();
 
-// @routes     GET api/v1/users
-// @desc       유저 인증 상태
-router.get("/", auth, async (req, res) => {
-  try {
-    res.status(200).json(req.user || false);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 // @routes     POST api/v1/users
 // @desc       유저 회원가입
-router.post("/", async (req, res) => {
-  const { email, nickname, password } = req.body;
-  try {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const newUser = new User({
-      email,
-      nickname,
-      password: hashedPassword,
-    });
+router.post(INDEX_PATH, userCtrl.postUser);
 
-    const user = await newUser.save();
+// @routes     patch api/v1/users
+// @desc       유저 정보 수정
+router.patch(FIND_BY_ID, auth, userCtrl.updateUser);
 
-    // 토큰 생성
-    const token = user.generateToken();
+// @routes     patch api/v1/users
+// @desc       유저 삭제
+router.delete(FIND_BY_ID, auth, userCtrl.deleteUser);
 
-    res
-      .cookie("access_token", token, {
-        maxAge: 1000 * 60 * 60 * 24 * 7, // 7일, (1000 * 60 * 60 * 24) = 1일
-        httpOnly: true,
-      })
-      .status(200)
-      .json({ msg: "가입 완료" });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// @routes     GET api/v1/users/:id
+// @desc       클라이언트로부터 전달받은 id를 통해 유저 정보를 전달
+router.get(FIND_BY_ID, userCtrl.getUserFindById);
 
+// @routes     GET api/v1/users/all-users
+// @desc       모든유저 정보
+router.get(INDEX_PATH, userCtrl.getUsersInfo);
+
+// @routes     patch api/v1/users/:id/follow
+// @desc       유저 팔로우
+router.patch("/:id/follow", auth, userCtrl.addFollow);
+
+// @routes     patch api/v1/users/:id/unfollow
+// @desc       유저 언팔로우
+router.patch("/:id/unfollow", auth, userCtrl.unFollow);
+
+// @routes     get api/v1/users/:id/follow
+// @desc       유저 팔로워, 팔로잉 목록
+router.get("/:id/follow", auth, userCtrl.getFollowFindById);
 export default router;
