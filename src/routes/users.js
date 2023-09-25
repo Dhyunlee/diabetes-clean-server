@@ -35,5 +35,5 @@ router.patch("/:id/unfollow", auth, userCtrl.unFollow);
 
 // @routes     get api/v1/users/:id/follow
 // @desc       유저 팔로워, 팔로잉 목록
-router.get("/:id/follow", auth, userCtrl.getFollowFindById);
+router.get("/:id/follow", userCtrl.getFollowFindById);
 export default router;
