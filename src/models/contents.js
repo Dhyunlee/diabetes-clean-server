@@ -28,5 +28,7 @@ const contentsSchema = new Schema(
   }
 );
 
+// 검색을 위한 인덱싱
+contentsSchema.index({ content: "text" });
 const Contents = model("Contents", contentsSchema);
 export default Contents;

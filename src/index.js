@@ -14,7 +14,8 @@ import {
   commentRouter,
   contentsRouter,
   diabetesRouter,
-  likeRouter
+  likeRouter,
+  searchRouter
 } from "./routes/index.js";
 
 const app = express();
@@ -39,6 +40,7 @@ app.use("/api/v1/diabetes", diabetesRouter);
 app.use("/api/v1/contents", contentsRouter);
 app.use("/api/v1/comment", commentRouter);
 app.use("/api/v1/like", likeRouter);
+app.use("/api/v1/search", searchRouter);
 app.use("/", (req, res) => res.send("연결 완료"));
 
 app.listen(PORT, () =>

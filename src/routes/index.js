@@ -4,6 +4,7 @@ import diabetesRouter from "./diabetes.js";
 import contentsRouter from "./contents.js";
 import commentRouter from "./comment.js";
 import likeRouter from "./like.js";
+import searchRouter from "./search.js";
 
 export {
   usersRouter,
@@ -11,5 +12,6 @@ export {
   diabetesRouter,
   contentsRouter,
   commentRouter,
-  likeRouter
+  likeRouter,
+  searchRouter
 };
