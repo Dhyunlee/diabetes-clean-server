@@ -21,7 +21,7 @@ export const contentsCtrl = {
       console.log(contents);
       if (!contents._id) {
         return res
-          .status(403)
+          .status(404)
           .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
       }
       await contents.updateOne({
@@ -40,7 +40,7 @@ export const contentsCtrl = {
       const contents = await Contents.findById(req.params.id);
       if (!contents._id) {
         return res
-          .status(403)
+          .status(404)
           .json({ isOk: false, msg: "해당 게시글이 존재하지 않습니다." });
       }
       await contents.updateOne({
@@ -67,7 +67,7 @@ export const contentsCtrl = {
         .limit(listSize)
         .populate("writer", "nickname imageSrc");
       if (!totalContents) {
-        return res.status(403).json({
+        return res.status(404).json({
           isOk: false,
           contents: [],
           msg: "해당 게시글이 존재하지 않습니다."
@@ -87,7 +87,7 @@ export const contentsCtrl = {
         "nickname imageSrc"
       );
       if (contents._id) {
-        return res.status(403).json({
+        return res.status(404).json({
           isOk: false,
           contents: [],
           msg: "해당 게시글이 존재하지 않습니다."
@@ -120,7 +120,7 @@ export const contentsCtrl = {
         .populate("writer", "email nickname imageSrc aboutMe");
 
       if (!totalContents) {
-        return res.status(403).json({
+        return res.status(404).json({
           isOk: false,
           contents: [],
           msg: "해당 게시글이 존재하지 않습니다."
@@ -141,7 +141,7 @@ export const contentsCtrl = {
         writer: users._id
       });
       if (!contentsCount) {
-        return res.status(403).json({
+        return res.status(404).json({
           isOk: false,
           msg: "해당 게시글이 존재하지 않습니다.",
           contents: []
@@ -186,7 +186,7 @@ export const contentsCtrl = {
           populate: { path: "writer", select: "_id email nickname imageSrc" }
         });
       if (!totalContents) {
-        return res.status(403).json({
+        return res.status(404).json({
           isOk: false,
           likedPost: [],
           msg: "불러올 관심 컨텐츠가 없습니다."

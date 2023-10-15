@@ -25,7 +25,7 @@ export const userCtrl = {
       const user = await User.findById(req.params.id);
 
       if (!user) {
-        return res.status(403).json({
+        return res.status(404).json({
           isOk: false,
           msg: "해당 유저가 존재하지 않습니다."
         });
@@ -46,7 +46,7 @@ export const userCtrl = {
       const user = await User.findById(req.params.id);
 
       if (!user) {
-        return res.status(403).json({
+        return res.status(404).json({
           isOk: false,
           msg: "해당 유저가 존재하지 않습니다."
         });
@@ -70,7 +70,7 @@ export const userCtrl = {
     try {
       const user = await User.findById(req.params.id);
       if (!user) {
-        return res.status(403).json({
+        return res.status(404).json({
           isOk: false,
           msg: "해당 유저가 존재하지 않습니다."
         });
@@ -153,7 +153,7 @@ export const userCtrl = {
     try {
       const user = await User.findById(req.params.id);
       if (!user) {
-        return res.status(403).json({
+        return res.status(404).json({
           isOk: false,
           msg: "해당 유저가 존재하지 않습니다."
         });

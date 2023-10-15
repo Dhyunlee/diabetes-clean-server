@@ -18,7 +18,7 @@ export const commentCtrl = {
       const comment = await Comment.findById(req.params.id);
       if (!comment) {
         return res
-          .status(403)
+          .status(404)
           .json({ isOk: false, msg: "해당 댓글이 존재하지 않습니다." });
       }
       await comment.updateOne({
@@ -40,7 +40,7 @@ export const commentCtrl = {
       );
       if (!comment) {
         return res
-          .status(403)
+          .status(404)
           .json({ isOk: false, msg: "해당 댓글이 존재하지 않습니다." });
       }
 

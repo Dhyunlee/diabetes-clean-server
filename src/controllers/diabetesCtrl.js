@@ -15,7 +15,7 @@ export const diabetesCtrl = {
     try {
       const diabetes = await Diabetes.findById(req.params.id);
       if (!diabetes) {
-        return res.status(403).json({
+        return res.status(404).json({
           isOk: false,
           msg: "해당 당수치 데이터가 존재하지 않습니다."
         });
@@ -33,7 +33,7 @@ export const diabetesCtrl = {
     try {
       const diabetes = await Diabetes.findById(req.params.id);
       if (!diabetes) {
-        return res.status(403).json({
+        return res.status(404).json({
           isOk: false,
           msg: "해당 당수치 데이터가 존재하지 않습니다."
         });
