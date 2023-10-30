@@ -1,4 +1,14 @@
+export const BASIC_CLIENT_URL = "http://localhost:3000";
+export const BASIC_API_URL = "/api/v1";
+export const USERS = "user";
+export const AUTH = "auth";
+export const DIABETES = "diabetes";
+export const CONTENTS = "contents";
+export const COMMENT = "comment";
+export const LIKE = "like";
+export const SEARCH = "search";
 export const INDEX_PATH = "/";
+
 export const FIND_BY_ID = "/:id";
 export const GET_USER_FIND_BY_ID = "/users/:id";
 export const GET_USER_CONTENTS = "/users/:nickname";
