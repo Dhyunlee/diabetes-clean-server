@@ -29,11 +29,9 @@ router.get(INDEX_PATH, contentsCtrl.getAllContents);
 // @desc       유저의 게시글 (내피드)
 router.get(GET_USER_CONTENTS, contentsCtrl.getMyFeed);
 
-// @routes     GET api/v1/contents/users/:nickname/count
+// @routes     GET api/v1/contents/users/:nickname/info[내게시글 수 포함]
 // @desc       유저의 게시글 (내피드)
 router.get(`${GET_USER_CONTENTS}/info`, contentsCtrl.getMyFeedInfo);
-
-//getMyFeedInfo
 
 // @routes     GET api/v1/contents/like/users/:nickname
 // @desc       내 관심 게시글
@@ -41,5 +39,5 @@ router.get("/like/users/:nickname", contentsCtrl.getLikedMyContents);
 
 // @routes     GET api/v1/contents/:id
 // @desc       Contents 상세 조회
-router.get(`/${FIND_BY_ID}`, contentsCtrl.getContentsFindById);
+router.get(FIND_BY_ID, contentsCtrl.getContentsFindById);
 export default router;
