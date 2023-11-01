@@ -50,7 +50,7 @@ app.use(`${BASIC_API_URL}/${CONTENTS}`, contentsRouter);
 app.use(`${BASIC_API_URL}/${COMMENT}`, commentRouter);
 app.use(`${BASIC_API_URL}/${LIKE}`, likeRouter);
 app.use(`${BASIC_API_URL}/${SEARCH}`, searchRouter);
-app.use(`${INDEX_PATH}`, (_, res) => res.send("연결 완료"));
+// app.use(`${INDEX_PATH}`, (_, res) => res.send("연결 완료"));
 
 app.listen(PORT, () =>
   console.log(`Server Listening on http://localhost:${PORT}`)

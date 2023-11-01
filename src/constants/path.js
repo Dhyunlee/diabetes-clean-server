@@ -1,6 +1,6 @@
 export const BASIC_CLIENT_URL = "http://localhost:3000";
 export const BASIC_API_URL = "/api/v1";
-export const USERS = "user";
+export const USERS = "users";
 export const AUTH = "auth";
 export const DIABETES = "diabetes";
 export const CONTENTS = "contents";
