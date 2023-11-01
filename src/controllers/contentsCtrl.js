@@ -86,7 +86,7 @@ export const contentsCtrl = {
         "writer",
         "nickname imageSrc"
       );
-      if (contents._id) {
+      if (!contents._id) {
         return res.status(404).json({
           isOk: false,
           contents: [],
