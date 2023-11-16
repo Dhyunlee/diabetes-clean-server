@@ -5,6 +5,7 @@ import contentsRouter from "./contents.js";
 import commentRouter from "./comment.js";
 import likeRouter from "./like.js";
 import searchRouter from "./search.js";
+import imageRouter from "./image.js";
 
 export {
   usersRouter,
@@ -13,5 +14,6 @@ export {
   contentsRouter,
   commentRouter,
   likeRouter,
-  searchRouter
+  searchRouter,
+  imageRouter
 };
