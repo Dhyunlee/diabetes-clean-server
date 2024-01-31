@@ -23,9 +23,10 @@ export const authCtrl = {
       } else {
         console.log(isMathchPw, "로그인성공");
         const accessToken = JWT_AUTH.generateToken({ email: user.email });
+        const {password, ...userInfo} = user._doc;
         res
           .status(200)
-          .json({ isOk: true, accessToken, msg: "로그인 인증했습니다." });
+          .json({ isOk: true, accessToken, userInfo, msg: "로그인이 되었습니다." });
       }
     } catch (err) {
       console.error(err);

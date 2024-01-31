@@ -58,7 +58,7 @@ export const contentsCtrl = {
   getAllContents: async (req, res) => {
     try {
       const [currentPage, listSize, totalContents] = await getPaging(
-        qs.parse(req.query)
+        req.query
       );
 
       const contents = await Contents.find()

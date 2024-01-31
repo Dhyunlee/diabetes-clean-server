@@ -14,7 +14,7 @@ export const userCtrl = {
       });
 
       await newUser.save();
-      res.status(200).json({ isOk: true, msg: "가입 완료" });
+      res.status(200).json({ isOk: true, msg: "유저가 등록되었습니다." });
     } catch (err) {
       console.error(err);
       res.status(500).json(err);

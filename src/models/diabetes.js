@@ -26,7 +26,8 @@ const diabetesSchema = new Schema(
     }
   },
   {
-    timestamps: false
+    timestamps: false,
+    versionKey: false
   }
 );
 
