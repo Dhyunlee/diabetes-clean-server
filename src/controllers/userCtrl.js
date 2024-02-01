@@ -35,7 +35,7 @@ export const userCtrl = {
       });
       return res
         .status(200)
-        .json({ isOk: true, msg: "해당 유저 정보가 수정되었습니다." });
+        .json({ isOk: true, msg: "해당 유저 정보가 수정되었습니다.", user });
     } catch (err) {
       console.error(err);
       res.status(500).json(err);
@@ -56,7 +56,7 @@ export const userCtrl = {
         보안상 삭제하는 게 좋다고 판단. 
       */
       await user.deleteOne();
-      return res.status(200).json({ isOk: true, msg: "회원 탈퇴되었습니다." });
+      return res.status(200).json({ isOk: true, msg: "회원 탈퇴되었습니다.", user });
     } catch (err) {
       console.error(err);
       res.status(500).json(err);
