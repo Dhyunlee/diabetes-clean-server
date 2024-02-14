@@ -10,13 +10,9 @@ const contentsSchema = new Schema(
     content: {
       type: String
     },
-    imageName: {
-      type: String,
-      default: ""
-    },
-    imageUrl: {
-      type: String,
-      default: ""
+    imageData: {
+      type: [],
+      default: []
     },
     isDeleted: {
       type: Boolean,

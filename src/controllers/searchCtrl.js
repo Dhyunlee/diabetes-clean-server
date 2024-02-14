@@ -19,7 +19,7 @@ export const searchCtrl = {
         .sort({ createdAt: -1 })
         .skip(listSize * (currentPage - 1))
         .limit(listSize)
-        .populate("writer", "nickname imageSrc");
+        .populate("writer", "nickname imageData");
 
       if (!totalContents) {
         return res.status(404).json({

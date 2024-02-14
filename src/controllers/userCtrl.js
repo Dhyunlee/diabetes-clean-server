@@ -23,19 +23,22 @@ export const userCtrl = {
   updateUser: async (req, res) => {
     try {
       const user = await User.findById(req.params.id);
-
+       
       if (!user) {
         return res.status(404).json({
           isOk: false,
           msg: "해당 유저가 존재하지 않습니다."
         });
       }
-      await user.updateOne({
+      const result = await user.updateOne({
         $set: req.body
+      }, {
+        new: true
       });
+
       return res
         .status(200)
-        .json({ isOk: true, msg: "해당 유저 정보가 수정되었습니다.", user });
+        .json({ isOk: true, msg: "해당 유저 정보가 수정되었습니다.", result });
     } catch (err) {
       console.error(err);
       res.status(500).json(err);
@@ -56,7 +59,7 @@ export const userCtrl = {
         보안상 삭제하는 게 좋다고 판단. 
       */
       await user.deleteOne();
-      return res.status(200).json({ isOk: true, msg: "회원 탈퇴되었습니다.", user });
+      return res.status(200).json({ isOk: true, msg: "회원 탈퇴되었습니다." });
     } catch (err) {
       console.error(err);
       res.status(500).json(err);

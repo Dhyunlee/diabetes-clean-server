@@ -1,7 +1,22 @@
+import { v2 } from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 import multer from "multer";
 import path from "path";
 
 //savePath: ex) "uploads/userImg"
+
+export const coludinayUploadImg = (public_id) => {
+  const storage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+      folder: "ugt3hafu",
+      format: async (req, file) => "png",
+      public_id: (req, file) => public_id
+    }
+  });
+  multer({ storage });
+};
+
 export const uploadImg = (savePath) =>
   multer({
     storage: multer.diskStorage({

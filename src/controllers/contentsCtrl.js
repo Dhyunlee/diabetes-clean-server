@@ -57,15 +57,13 @@ export const contentsCtrl = {
   // /contents?page=1&size=10
   getAllContents: async (req, res) => {
     try {
-      const [currentPage, listSize, totalContents] = await getPaging(
-        req.query
-      );
+      const [currentPage, listSize, totalContents] = await getPaging(req.query);
 
       const contents = await Contents.find()
         .sort({ createdAt: -1 }) //데이터 최신순으로 정렬
         .skip(listSize * (currentPage - 1))
         .limit(listSize)
-        .populate("writer", "nickname imageSrc");
+        .populate("writer", "nickname imageData");
       if (!totalContents) {
         return res.status(404).json({
           isOk: false,
@@ -84,7 +82,7 @@ export const contentsCtrl = {
     try {
       const contents = await Contents.findById(req.params.id).populate(
         "writer",
-        "nickname imageSrc"
+        "nickname imageData"
       );
       if (!contents._id) {
         return res.status(404).json({
@@ -117,7 +115,7 @@ export const contentsCtrl = {
         .sort({ createdAt: -1 })
         .skip(listSize * (currentPage - 1))
         .limit(listSize)
-        .populate("writer", "email nickname imageSrc aboutMe");
+        .populate("writer", "email nickname imageData aboutMe");
 
       if (!totalContents) {
         return res.status(404).json({
@@ -183,7 +181,7 @@ export const contentsCtrl = {
         .limit(listSize)
         .populate({
           path: "contents",
-          populate: { path: "writer", select: "_id email nickname imageSrc" }
+          populate: { path: "writer", select: "_id email nickname imageData" }
         });
       if (!totalContents) {
         return res.status(404).json({

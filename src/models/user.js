@@ -18,9 +18,9 @@ const userSchema = new Schema(
       minglength: 5,
       require: true
     },
-    imageSrc: {
-      type: String,
-      default: ""
+    imageData: {
+      type: Object,
+      default: {}
     },
     aboutMe: {
       //유저 소개
