@@ -6,21 +6,21 @@ const userSchema = new Schema(
     email: {
       type: String,
       unique: true,
-      maxlength: 50,
+      maxlength: 66,
       require: true
     },
     nickname: {
       type: String,
-      maxlength: 50
+      maxlength: 13
     },
     password: {
       type: String,
       minglength: 5,
       require: true
     },
-    imageSrc: {
-      type: String,
-      default: ""
+    imageData: {
+      type: Object,
+      default: {}
     },
     aboutMe: {
       //유저 소개
@@ -44,7 +44,8 @@ const userSchema = new Schema(
     }
   },
   {
-    timestamps: true
+    timestamps: true,
+    versionKey: false
   }
 );
 

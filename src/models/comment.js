@@ -24,7 +24,8 @@ const commentSchema = new Schema(
     }
   },
   {
-    timestamps: true
+    timestamps: true,
+    versionKey: false
   }
 );
 

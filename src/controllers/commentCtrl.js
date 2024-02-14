@@ -62,7 +62,7 @@ export const commentCtrl = {
         contentsId: req.params.id
       })
         .sort({ createdAt: -1 })
-        .populate("writer", "nickname imageSrc")
+        .populate("writer", "nickname imageData")
         .populate("contentsId", "_id content writer");
       res.status(200).json({ isOk: true, comment });
     } catch (err) {
@@ -77,7 +77,7 @@ export const commentCtrl = {
         writer: req.params.userId
       })
         .sort({ createdAt: -1 })
-        .populate("writer", "nickname imageSrc");
+        .populate("writer", "nickname imageData");
       res.status(200).json({ isOk: true, comment });
     } catch (err) {
       console.error(err);
