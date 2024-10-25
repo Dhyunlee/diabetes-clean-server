@@ -98,9 +98,9 @@ export const likeCtrl = {
       .populate("contents");
 
     if (!like) {
-      return res.status(404).json({
+      return res.status(204).json({
         isOk: false,
-        msg: "해당 게시글의 좋아요 정보가 존재하지 않습니다."
+        msg: "좋아요한 게시글이 존재하지 않습니다."
       });
     }
 
@@ -118,9 +118,9 @@ export const likeCtrl = {
         comments: req.params.id
       })
       .populate("comments");
-    if (!like) {
-      return res.status(404).json({
-        isOk: false,
+    if (!like.length) {
+      return res.status(204).json({
+        isOk: true,
         msg: "해당 댓글의 좋아요 정보가 존재하지 않습니다."
       });
     }

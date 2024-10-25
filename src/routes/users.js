@@ -21,6 +21,10 @@ router.delete(FIND_BY_ID, auth, userCtrl.deleteUser);
 // @desc       클라이언트로부터 전달받은 id를 통해 유저 정보를 전달
 router.get(FIND_BY_ID, userCtrl.getUserFindById);
 
+// @routes     GET api/v1/users/usernick/:nickname
+// @desc       클라이언트로부터 전달받은 nickname를 통해 유저 정보를 전달
+router.get("/usernick/:nickname", userCtrl.getUserFindOne);
+
 // @routes     GET api/v1/users/all-users
 // @desc       모든유저 정보
 router.get(INDEX_PATH, userCtrl.getUsersInfo);

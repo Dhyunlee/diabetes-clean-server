@@ -16,6 +16,17 @@ const userSchema = new Schema(
     password: {
       type: String,
       minglength: 5,
+      require: false, //sns 로그인인 경우 필요 없음
+      default: ""
+    },
+    snsId: {
+      type: String,
+      require: true
+    },
+    provider: {
+      type: String,
+      enum: ['local', 'kakao', 'google', 'naver'],
+      default: 'local',
       require: true
     },
     imageData: {
@@ -38,10 +49,7 @@ const userSchema = new Schema(
         type: ObjectId,
         ref: "User"
       }
-    ],
-    token: {
-      type: String
-    }
+    ]
   },
   {
     timestamps: true,

@@ -22,7 +22,7 @@ export const searchCtrl = {
         .populate("writer", "nickname imageData");
 
       if (!totalContents) {
-        return res.status(404).json({
+        return res.status(400).json({
           isOk: false,
           likedPost: [],
           msg: "검색 결과가 없습니다."

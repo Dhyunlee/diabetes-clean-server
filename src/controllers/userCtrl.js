@@ -14,7 +14,7 @@ export const userCtrl = {
       });
 
       await newUser.save();
-      res.status(200).json({ isOk: true, msg: "유저가 등록되었습니다." });
+      res.status(200).json({ isOk: true, msg: "회원가입이 되었습니다." });
     } catch (err) {
       console.error(err);
       res.status(500).json(err);
@@ -23,18 +23,21 @@ export const userCtrl = {
   updateUser: async (req, res) => {
     try {
       const user = await User.findById(req.params.id);
-       
+
       if (!user) {
-        return res.status(404).json({
+        return res.status(400).json({
           isOk: false,
           msg: "해당 유저가 존재하지 않습니다."
         });
       }
-      const result = await user.updateOne({
-        $set: req.body
-      }, {
-        new: true
-      });
+      const result = await user.updateOne(
+        {
+          $set: req.body
+        },
+        {
+          new: true
+        }
+      );
 
       return res
         .status(200)
@@ -49,7 +52,7 @@ export const userCtrl = {
       const user = await User.findById(req.params.id);
 
       if (!user) {
-        return res.status(404).json({
+        return res.status(400).json({
           isOk: false,
           msg: "해당 유저가 존재하지 않습니다."
         });
@@ -73,12 +76,32 @@ export const userCtrl = {
     try {
       const user = await User.findById(req.params.id);
       if (!user) {
-        return res.status(404).json({
+        return res.status(400).json({
           isOk: false,
           msg: "해당 유저가 존재하지 않습니다."
         });
       }
       res.status(200).json({ isOk: true, userInfo: user });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ err });
+    }
+  },
+  /**
+   * 유저 정보를 불러오기
+   * @description 클라이언트로부터 전달받은 nickname을 통해 유저 정보를 전달합니다.
+   */
+  getUserFindOne: async (req, res) => {
+    try {
+      const user = await User.findOne({ nickname: req.params.nickname });
+      const { password, ...userInfo } = user._doc;
+      if (!user) {
+        return res.status(400).json({
+          isOk: false,
+          msg: "해당 유저가 존재하지 않습니다."
+        });
+      }
+      res.status(200).json({ isOk: true, userInfo });
     } catch (err) {
       console.error(err);
       res.status(500).json({ err });
@@ -156,7 +179,7 @@ export const userCtrl = {
     try {
       const user = await User.findById(req.params.id);
       if (!user) {
-        return res.status(404).json({
+        return res.status(400).json({
           isOk: false,
           msg: "해당 유저가 존재하지 않습니다."
         });

@@ -15,7 +15,7 @@ export const diabetesCtrl = {
     try {
       const diabetes = await Diabetes.findById(req.params.id);
       if (!diabetes) {
-        return res.status(404).json({
+        return res.status(400).json({
           isOk: false,
           msg: "해당 당수치 데이터가 존재하지 않습니다."
         });
@@ -33,7 +33,7 @@ export const diabetesCtrl = {
     try {
       const diabetes = await Diabetes.findById(req.params.id);
       if (!diabetes) {
-        return res.status(404).json({
+        return res.status(400).json({
           isOk: false,
           msg: "해당 당수치 데이터가 존재하지 않습니다."
         });
@@ -55,6 +55,7 @@ export const diabetesCtrl = {
       const diabetes = await Diabetes.find({ writer })
         .sort({ createdAt: -1 }) // 내림차순 정렬
         .populate("writer", "nickname");
+      console.log(diabetes);  
       res.status(200).json({ isOk: true, diabetesInfo: diabetes });
     } catch (err) {
       return res.status(500).json(err);

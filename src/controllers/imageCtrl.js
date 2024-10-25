@@ -21,7 +21,7 @@ export const imageCtrl = {
         }
       );
       if (data.result === "not found") {
-        return res.status(404).json({ isOk: false, msg: data.result });
+        return res.status(400).json({ isOk: false, msg: data.result });
       }
       res.json({ isOk: true, msg: data.result });
     } catch (error) {

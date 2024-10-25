@@ -17,6 +17,9 @@ const LikeSchema = new Schema({
     type: ObjectId,
     ref: "Comment"
   }
+}, {
+  timestamps: true,
+  versionKey: false
 });
 
 const Like = model("Like", LikeSchema);

@@ -16,10 +16,12 @@ export const commentCtrl = {
   deleteComment: async (req, res) => {
     try {
       const comment = await Comment.findById(req.params.id);
-      if (!comment) {
-        return res
-          .status(404)
-          .json({ isOk: false, msg: "해당 댓글이 존재하지 않습니다." });
+      if (!comment.length) {
+        return res.status(204).json({
+          isOk: true,
+          comment: [],
+          msg: "해당 댓글이 존재하지 않습니다."
+        });
       }
       await comment.updateOne({
         $set: { isDeleted: true }
@@ -38,12 +40,15 @@ export const commentCtrl = {
         "writer",
         "nickname"
       );
-      if (!comment) {
+      if (!comment.length) {
         return res
-          .status(404)
-          .json({ isOk: false, msg: "해당 댓글이 존재하지 않습니다." });
+          .status(204)
+          .json({
+            isOk: true,
+            comment: [],
+            msg: "해당 댓글이 존재하지 않습니다."
+          });
       }
-
       await comment.updateOne({
         $set: req.body
       });

@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import config from "../config/dev.js";
+import RefreshToken from "../models/refleshToken.js";
 
 const { JWT_SECRET, JWT_ALGORITHN, JWT_SHORT_EXPIRESIN, JWT_LONG_EXPIRESIN } =
   config;
@@ -17,35 +18,33 @@ const JWT_AUTH = {
   },
   generateRefleshToken: () => {
     return jwt.sign({}, JWT_SECRET, {
-      JWT_ALGORITHN,
+      algorithm: JWT_ALGORITHN,
       expiresIn: JWT_LONG_EXPIRESIN
     });
   },
   verifyToken: async (token) => {
     try {
+      console.log('verifyToken', token)
       const decoded = jwt.verify(token, JWT_SECRET);
+      console.log({decoded: decoded})
       return { isDecode: true, decoded };
     } catch (error) {
-      if (error.message === "jwt expired") {
-        return { isDecode: false, message: error.message };
-      } else {
-        return { isDecode: false, message: "invalid Token" };
-      }
+      console.log(error);
+      return { isDecode: false };
     }
   },
-  verifyRefleshToken: async (token, savedToken) => {
-    if (token !== savedToken) {
-      return { isDecode: false, message: "invalid Token" };
+  verifyRefleshToken: async (token) => {
+    console.log("토큰 검증");
+    const savedToken = await RefreshToken.findOne({ token });
+    if (!savedToken) {
+      return null;
     } else {
       try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        return { isDecode: true, decoded };
+        return { isDecode: true, decoded, userId: savedToken.userId };
       } catch (error) {
-        if (error.message === "jwt expired") {
-          return { isDecode: false, message: error.message };
-        } else {
-          return { isDecode: false, message: "invalid Token" };
-        }
+        await savedToken.deleteOne()
+        return { isDecode: false };
       }
     }
   }

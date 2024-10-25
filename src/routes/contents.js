@@ -26,12 +26,12 @@ router.delete(FIND_BY_ID, auth, contentsCtrl.deleteContents);
 router.get(INDEX_PATH, contentsCtrl.getAllContents);
 
 // @routes     GET api/v1/contents/users/:nickname
-// @desc       유저의 게시글 (내피드)
+// @desc       유저의 게시글(= 내 피드)
 router.get(GET_USER_CONTENTS, contentsCtrl.getMyFeed);
 
-// @routes     GET api/v1/contents/users/:nickname/info[내게시글 수 포함]
-// @desc       유저의 게시글 (내피드)
-router.get(`${GET_USER_CONTENTS}/info`, contentsCtrl.getMyFeedInfo);
+// @routes     GET api/v1/contents/myfeed-info/users:nickname
+// @desc       유저의 게시글(= 내 피드)의 게시글 정보(내 게시글 포함 x)
+router.get(`/myfeed-info/users/:nickname`, contentsCtrl.getMyFeedInfo);
 
 // @routes     GET api/v1/contents/like/users/:nickname
 // @desc       내 관심 게시글

@@ -28,6 +28,7 @@ import {
 } from "./constants/path.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import mongoose from "mongoose";
 
 const app = express();
 const { PORT, COOKIE_SECRET, CLIENT_URL } = config;
@@ -61,7 +62,6 @@ app.use(`${BASIC_API_URL}/${COMMENT}`, commentRouter);
 app.use(`${BASIC_API_URL}/${LIKE}`, likeRouter);
 app.use(`${BASIC_API_URL}/${SEARCH}`, searchRouter);
 app.use(`${BASIC_API_URL}/image`, imageRouter);
-// app.use(`${INDEX_PATH}`, (_, res) => res.send("연결 완료"));
 
 app.listen(PORT, () =>
   console.log(`Server Listening on http://localhost:${PORT}`)
